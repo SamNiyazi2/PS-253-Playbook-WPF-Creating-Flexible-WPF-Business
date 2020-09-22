@@ -7,48 +7,69 @@
         mc:Ignorable="d"
         Title="Playbook WPF: Creating Flexible WPF Business Application Screens"
         WindowStartupLocation="CenterScreen">
-  <Window.Resources>
-    <vm:MainWindowViewModel x:Key="viewModel"
+    <Window.Resources>
+        <vm:MainWindowViewModel x:Key="viewModel"
+                             InfoMessageTitle="Please wait while loading application..."
                             StatusMessage="Creating Flexible WPF Business Application Screens" />
-  </Window.Resources>
-  <Grid Background="{StaticResource gridBackgroundColor}"
+    </Window.Resources>
+    <Grid Background="{StaticResource gridBackgroundColor}"
         DataContext="{StaticResource viewModel}">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="*" />
-      <RowDefinition Height="Auto" />
-    </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-    <!-- Menu Area -->
-    <Menu Grid.Row="0"
+        <!-- Menu Area -->
+        <Menu Grid.Row="0"
           IsMainMenu="True">
-      <Menu.ItemsPanel>
-        <ItemsPanelTemplate>
-          <DockPanel HorizontalAlignment="Stretch" />
-        </ItemsPanelTemplate>
-      </Menu.ItemsPanel>
-      <MenuItem Header="_File">
-        <MenuItem Header="E_xit"
+            <Menu.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <DockPanel HorizontalAlignment="Stretch" />
+                </ItemsPanelTemplate>
+            </Menu.ItemsPanel>
+            <MenuItem Header="_File">
+                <MenuItem Header="E_xit"
                   Click="MenuItem_Click" />
-      </MenuItem>
-      <MenuItem Header="Users"
+            </MenuItem>
+            <MenuItem Header="Users"
                 Click="MenuItem_Click" />
-      <MenuItem Header="Feedback"
+            <MenuItem Header="Feedback"
                 Click="MenuItem_Click" />
-      <MenuItem Header="{Binding Path=LoginMenuHeader}"
+            <MenuItem Header="{Binding Path=LoginMenuHeader}"
                 HorizontalAlignment="Right"
                 Click="MenuItem_Click" />
-    </Menu>
+        </Menu>
 
-    <!-- Content Area -->
-    <Grid Grid.Row="1"
+        
+        <!--Infomrational message area -->
+
+        <Border Grid.Row="1"
+                Panel.ZIndex="2"
+                Visibility="{Binding Path=IsInfoMessageVisible,Converter={StaticResource visibilityConverter}}"
+                Style="{StaticResource infoMessageArea}">
+
+            <StackPanel>
+                <TextBlock FontSize="40"
+                           Text="{Binding Path=InfoMessageTitle}"/>
+                <TextBlock FontSize="24"
+                           Text="{Binding Path=InfoMessage}"/>
+                
+            </StackPanel>
+            
+        </Border>
+        
+        
+        
+        <!-- Content Area -->
+        <Grid Grid.Row="1"
           Panel.ZIndex="1"
           Name="contentArea"
           Style="{StaticResource contentAreaStyle}" />
 
-    <!-- Status Message Area -->
-    <TextBlock Grid.Row="2"
+        <!-- Status Message Area -->
+        <TextBlock Grid.Row="2"
                Text="{Binding Path=StatusMessage}"
                Style="{StaticResource statusAreaStyle}" />
-  </Grid>
+    </Grid>
 </Window>
