@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using WPF.Sample.ViewModelLayer;
@@ -27,20 +28,46 @@ namespace WPF.Sample
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            await Dispatcher.BeginInvoke(new Action(() =>
-              {
-                  Thread.Sleep(2000);
-                  try
-                  {
-                      _viewModel.IsInfoMessageVisible = false;
-                  }
-                  catch (Exception ex)
-                  {
 
-                      string error = ex.Message;
-                  }
+            await LoadApplication();
 
-              }), DispatcherPriority.Background);
+            _viewModel.ClearInfoMessages();
         }
+
+
+        // 09/22/2020 04:22 pm - SSN - [20200922-1617] - [002] - M02--08 - Demo: load resource in the background
+        public async Task LoadApplication()
+        {
+            _viewModel.InfoMessage = "Loading state codes...";
+            await Dispatcher.BeginInvoke(new Action(() =>
+          {
+              _viewModel.LoadStateCodes();
+          }), DispatcherPriority.Background);
+
+
+            _viewModel.InfoMessage = "Loading country codes...";
+            await Dispatcher.BeginInvoke(new Action(() =>
+         {
+             _viewModel.LoadCountryCodes();
+
+         }), DispatcherPriority.Background);
+
+
+            _viewModel.InfoMessage = "Loading employee types...";
+            await Dispatcher.BeginInvoke(new Action(() =>
+          {
+              _viewModel.LoadEmployeeTypes();
+
+          }), DispatcherPriority.Background);
+
+
+
+
+
+
+        }
+
+
+
     }
 }

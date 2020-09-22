@@ -1,10 +1,16 @@
 ﻿using Common.Library;
+using System.Threading;
 
 namespace WPF.Sample.ViewModelLayer
 {
     public class MainWindowViewModel : ViewModelBase
     {
         #region Private Variables
+
+        // 09/22/2020 04:17 pm - SSN - [20200922-1617] - [001] - M02--08 - Demo: load resource in the background
+        private const int SECONDS = 1500;
+
+
         private string _LoginMenuHeader = "Login";
         private string _StatusMessage;
 
@@ -81,5 +87,33 @@ namespace WPF.Sample.ViewModelLayer
 
 
         #endregion
+
+
+        public void LoadStateCodes()
+        {
+            // Todo: Write code to load state codes here
+            Thread.Sleep(SECONDS);
+        }
+
+        public void LoadCountryCodes()
+        {
+            // Todo: Write code to load country codes here
+            Thread.Sleep(SECONDS);
+        }
+
+        public void LoadEmployeeTypes()
+        {
+            //Todo: 
+            Thread.Sleep(SECONDS);
+        }
+
+        public void ClearInfoMessages()
+        {
+            InfoMessage = string.Empty;
+            InfoMessageTitle = string.Empty;
+            IsInfoMessageVisible = false;
+        }
+
+
     }
 }
