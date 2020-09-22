@@ -45,8 +45,8 @@ namespace WPF.Sample.ViewModelLayer
             get { return _IsInfoMessageVisible; }
             set
             {
-                RaisePropertyChanged("StatusMessage");
                 _IsInfoMessageVisible = value;
+                RaisePropertyChanged("IsInfoMessageVisible");
             }
         }
 
