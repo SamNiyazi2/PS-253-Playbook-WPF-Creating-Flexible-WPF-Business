@@ -17,10 +17,15 @@ namespace WPF.Sample
     {
         private MainWindowViewModel _viewModel = null;
 
+        private string _originalMessage = string.Empty;
+
+
         public MainWindow()
         {
             InitializeComponent();
             _viewModel = (MainWindowViewModel)this.Resources["viewModel"];
+
+            _originalMessage = _viewModel.StatusMessage;
 
             MessageBroker.Instance.MessageReceived += Instance_MessageReceived;
         }
@@ -29,6 +34,10 @@ namespace WPF.Sample
         {
             switch ( e.MessageName)
             {
+                case MessageBrokerMessages.DISPLAY_STATUS_MESSAGE:
+                    _viewModel.StatusMessage = e.MessagePayload.ToString();
+                    break;
+
                 case MessageBrokerMessages.CLOSE_USER_CONTROL:
                     CloseUserControl();
                     break;
@@ -62,11 +71,12 @@ namespace WPF.Sample
         private void CloseUserControl()
         {
             contentArea.Children.Clear();
+           _viewModel.StatusMessage = _originalMessage;
         }
 
         public void DisplayUserControl(UserControl uc)
-        {
-            CloseUserControl();
+        { 
+            
             contentArea.Children.Add(uc);
         }
 
@@ -86,6 +96,7 @@ namespace WPF.Sample
                 }
                 else
                 {
+                    CloseUserControl();
 
                     uc = (UserControl)Activator.CreateInstance(ucType);
                     if (uc != null)

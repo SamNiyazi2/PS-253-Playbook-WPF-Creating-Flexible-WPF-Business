@@ -6,9 +6,13 @@ using Common.Library;
 
 namespace WPF.Sample.ViewModelLayer
 {
-public    class LoginViewModel:ViewModelBase
+    public class LoginViewModel : ViewModelBase
     {
 
+        public LoginViewModel()
+        {
+            DisplayStatusMessage("Login to application");
+        }
 
     }
 }
