@@ -9,7 +9,8 @@
 
 
     <ListView ItemsSource="{Binding Path=Users}"
-              SelectedItem="{Binding Path=Entity}">
+              SelectedItem="{Binding Path=Entity}"
+              IsEnabled="{Binding Path=IsListEnabled}">
 
         <ListView.View>
 

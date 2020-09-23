@@ -39,6 +39,20 @@ namespace WPF.Sample.ViewModelLayer
         }
 
 
+        public override bool Save()
+        {
+            // Todo: Save user
+            CancelEdit();
+            return true;
+        }
+
+        public override bool Delete()
+        {
+            // Todo: Delete user
+            return true;
+        }
+
+
     }
 
 

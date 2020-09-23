@@ -25,10 +25,56 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
+            <ToolBar Grid.Row="0">
+
+                <Button Style="{StaticResource toolbarButton}"
+                        IsEnabled="{Binding Path=IsListEnabled}"
+                        ToolTip="Add new user">
+                    <Image Source="pack://application:,,,/WPF.Common;component/Images/Plus_black.png"
+                           Style="{StaticResource toolbarImage}"/>
+                </Button>
+
+                <Separator/>
+
+                <Button Style="{StaticResource toolbarButton}"
+                        IsEnabled="{Binding Path=IsListEnabled}"
+                        
+                        ToolTip="Edit current user">
+                    <Image Source="pack://application:,,,/WPF.Common;component/Images/Edit_black.png"
+                           Style="{StaticResource toolbarImage}"/>
+                </Button>
+
+                <Button Style="{StaticResource toolbarButton}"
+                        IsEnabled="{Binding Path=IsListEnabled}"
+                        ToolTip="Delete current user">
+                    <Image Source="pack://application:,,,/WPF.Common;component/Images/Trash_black.png"
+                           Style="{StaticResource toolbarImage}"/>
+                </Button>
+
+                <Separator/>
+
+                <Button Style="{StaticResource toolbarButton}"
+                        IsEnabled="{Binding Path=IsDetailEnabled}"
+                        ToolTip="Undo changes">
+                    <Image Source="pack://application:,,,/WPF.Common;component/Images/Undo_black.png"
+                           Style="{StaticResource toolbarImage}"/>
+                </Button>
+
+                <Button Style="{StaticResource toolbarButton}"
+                        IsEnabled="{Binding Path=IsDetailEnabled}"
+                        ToolTip="Save changes">
+                    <Image Source="pack://application:,,,/WPF.Common;component/Images/Save_black.png"
+                           Style="{StaticResource toolbarImage}"/>
+                </Button>
+
+
+            </ToolBar>
+
             <local:UserMaintenanceListControl Grid.Row="1" 
                                           x:Name="listControl" 
                                           DataContext="{StaticResource viewModel}" />
             <local:UserMaintenanceDetailControl Grid.Row="2"
+                                                IsEnabled="{Binding Path=IsDetailEnabled}"
                                     x:Name="detailControl"
                                     DataContext="{StaticResource viewModel}"/>
 

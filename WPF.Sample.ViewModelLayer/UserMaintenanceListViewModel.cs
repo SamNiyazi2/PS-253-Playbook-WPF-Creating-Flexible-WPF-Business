@@ -7,7 +7,7 @@ using WPF.Sample.DataLayer;
 
 namespace WPF.Sample.ViewModelLayer
 {
-    public class UserMaintenanceListViewModel : ViewModelBase
+    public class UserMaintenanceListViewModel : ViewModelAddEditDeleteBase
     {
 
         private ObservableCollection<User> _Users = new ObservableCollection<User>();
