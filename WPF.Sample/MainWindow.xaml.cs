@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using WPF.Sample.DataLayer;
 using WPF.Sample.UserControls;
 using WPF.Sample.ViewModelLayer;
 
@@ -32,8 +33,18 @@ namespace WPF.Sample
 
         private void Instance_MessageReceived(object sender, MessageBrokerEventArgs e)
         {
-            switch ( e.MessageName)
+            switch (e.MessageName)
             {
+
+                case MessageBrokerMessages.LOGIN_SUCCESS:
+                    _viewModel.UserEntity = (User)e.MessagePayload;
+                    _viewModel.LoginMenuHeader = "Logout " + _viewModel.UserEntity.UserName;
+                    break;
+
+                case MessageBrokerMessages.LOGOUT:
+                    _viewModel.UserEntity.IsLoggedIn = false;
+                    _viewModel.LoginMenuHeader = "Login";
+                    break;
 
                 case MessageBrokerMessages.DISPLAY_TIMEOUT_INFO_MESSAGE_TITLE:
                     _viewModel.InfoMessageTitle = e.MessagePayload.ToString();
@@ -82,12 +93,12 @@ namespace WPF.Sample
         private void CloseUserControl()
         {
             contentArea.Children.Clear();
-           _viewModel.StatusMessage = _originalMessage;
+            _viewModel.StatusMessage = _originalMessage;
         }
 
         public void DisplayUserControl(UserControl uc)
-        { 
-            
+        {
+
             contentArea.Children.Add(uc);
         }
 
@@ -124,6 +135,19 @@ namespace WPF.Sample
             {
                 case "exit":
                     this.Close();
+                    break;
+
+                case "login":
+                    if (_viewModel.UserEntity.IsLoggedIn)
+                    {
+                        CloseUserControl();
+                        _viewModel.UserEntity = new User();
+                        _viewModel.LoginMenuHeader = "Login";
+                    }
+                    else
+                    {
+                        LoadUserControl("WPF.Sample.UserControls.LoginControl");
+                    }
                     break;
 
                 default:

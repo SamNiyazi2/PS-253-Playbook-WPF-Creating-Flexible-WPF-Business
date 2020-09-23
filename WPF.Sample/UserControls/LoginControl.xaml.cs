@@ -35,7 +35,10 @@ namespace WPF.Sample.UserControls
         // 09/23/2020 05:25 am - SSN - [20200923-0428] - [002] - M04-06 - Create informational messages that timeout
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
-        { 
+        {
+            _viewModel.Entity.Password = txtPassword.Password;
+
+            _viewModel.Login();
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

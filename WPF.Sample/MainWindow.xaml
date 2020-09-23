@@ -47,7 +47,7 @@
 
             <MenuItem Header="{Binding Path=LoginMenuHeader}"
                 HorizontalAlignment="Right"
-                     Tag="WPF.Sample.UserControls.LoginControl"
+                     Tag="login"
                 Click="MenuItem_Click" />
         </Menu>
 

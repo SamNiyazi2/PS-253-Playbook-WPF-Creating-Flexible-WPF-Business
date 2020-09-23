@@ -1,7 +1,7 @@
 ﻿using Common.Library;
 
 using System.Timers;
-
+using WPF.Sample.DataLayer;
 
 namespace WPF.Sample.ViewModelLayer
 {
@@ -17,6 +17,7 @@ namespace WPF.Sample.ViewModelLayer
         private Timer _InfoMessageTimer = null;
         private int _InfoMessageTimeout;
 
+        private User _UserEntity = new User();
 
         private string _LoginMenuHeader = "Login";
         private string _StatusMessage;
@@ -31,7 +32,18 @@ namespace WPF.Sample.ViewModelLayer
 
 
         #region Public Properties
-        
+
+
+        public User UserEntity
+        {
+            get { return _UserEntity; }
+            set
+            {
+                _UserEntity = value;
+                RaisePropertyChanged("UserEntity");
+
+            }
+        }
 
         public int InfoMessageTimeout
         {
