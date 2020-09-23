@@ -8,7 +8,7 @@
         Title="Playbook WPF: Creating Flexible WPF Business Application Screens"
         WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded">
-    
+
     <Window.Resources>
         <vm:MainWindowViewModel x:Key="viewModel"
                              InfoMessageTitle="Please wait while loading application..."
@@ -31,19 +31,25 @@
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
             <MenuItem Header="_File">
-                <MenuItem Header="E_xit"
-                  Click="MenuItem_Click" />
+                <MenuItem Header="E_xit" 
+                          Tag="exit"
+                          Click="MenuItem_Click" />
             </MenuItem>
+
             <MenuItem Header="Users"
-                Click="MenuItem_Click" />
+                      Tag="WPF.Sample.UserControls.UserMaintenanceControl"
+                      Click="MenuItem_Click" />
+            
             <MenuItem Header="Feedback"
-                Click="MenuItem_Click" />
+                     Tag="WPF.Sample.UserControls.UserFeedbackControl"
+                      Click="MenuItem_Click" />
+
             <MenuItem Header="{Binding Path=LoginMenuHeader}"
                 HorizontalAlignment="Right"
                 Click="MenuItem_Click" />
         </Menu>
 
-        
+
         <!--Infomrational message area -->
 
         <Border Grid.Row="1"
@@ -56,13 +62,13 @@
                            Text="{Binding Path=InfoMessageTitle}"/>
                 <TextBlock FontSize="24"
                            Text="{Binding Path=InfoMessage}"/>
-                
+
             </StackPanel>
-            
+
         </Border>
-        
-        
-        
+
+
+
         <!-- Content Area -->
         <Grid Grid.Row="1"
           Panel.ZIndex="1"

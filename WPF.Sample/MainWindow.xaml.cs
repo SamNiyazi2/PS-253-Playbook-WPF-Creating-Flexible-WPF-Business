@@ -2,7 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
+using WPF.Sample.UserControls;
 using WPF.Sample.ViewModelLayer;
 
 namespace WPF.Sample
@@ -24,7 +26,95 @@ namespace WPF.Sample
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
+            MenuItem mnu = (MenuItem)sender;
+            string cmd = string.Empty;
+
+            if (mnu.Tag != null)
+            {
+
+                cmd = mnu.Tag.ToString();
+
+                if (cmd.Contains("."))
+                {
+                    LoadUserControl(cmd);
+                }
+                else
+                {
+                    ProcessMenuCommands(cmd);
+                }
+            }
+
         }
+
+
+        // 09/23/2020 01:46 am - SSN - [20200923-0146] - [001] - M03-04 - Demo: write code to load and close user controls 
+        private void CloseUserControl()
+        {
+            contentArea.Children.Clear();
+        }
+
+        public void DisplayUserControl(UserControl uc)
+        {
+            CloseUserControl();
+            contentArea.Children.Add(uc);
+        }
+
+        private void LoadUserControl(string controlName)
+        {
+            Type ucType = null;
+            UserControl uc = null;
+
+            if (ShouldLoadUserControl(controlName))
+            {
+
+                ucType = Type.GetType(controlName);
+
+                if (ucType == null)
+                {
+                    MessageBox.Show("The control: " + controlName + " does not exist.");
+                }
+                else
+                {
+
+                    uc = (UserControl)Activator.CreateInstance(ucType);
+                    if (uc != null)
+                    {
+                        DisplayUserControl(uc);
+                    }
+                }
+            }
+        }
+
+        private void ProcessMenuCommands(string command)
+        {
+            switch (command.ToLower())
+            {
+                case "exit":
+                    this.Close();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+
+        private bool ShouldLoadUserControl(string controlName)
+        {
+            bool ret = true;
+
+            if (contentArea.Children.Count > 0)
+            {
+                if (((UserControl)contentArea.Children[0]).GetType().Name ==
+                    controlName.Substring(controlName.LastIndexOf(".") + 1))
+                {
+                    ret = false;
+                }
+            }
+
+            return ret;
+        }
+
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
