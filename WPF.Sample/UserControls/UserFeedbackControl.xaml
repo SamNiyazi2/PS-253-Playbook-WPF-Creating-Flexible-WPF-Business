@@ -8,19 +8,121 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Style="{StaticResource screenStyle}">
 
+
+
     <UserControl.Resources>
         <vm:UserFeedbackViewModel x:Key="viewModel"/>
+        <Style TargetType="Label"
+           x:Key="feedbackLabels">
+            <Setter Property="Margin" Value="0,4"/>
+        </Style>
     </UserControl.Resources>
+
+
     <Border Style="{StaticResource screenBorder}" >
 
-        <StackPanel>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <Grid DataContext="{Binding Source={StaticResource viewModel}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <TextBlock Text="User Feedback Screen" FontSize="18" Margin="20,80"/>
 
-            <Button Content="Close"
-                    HorizontalAlignment="Left"
-                    Click="CloseButton_Click"/>
-        </StackPanel>
+                <!-- First column -->
+
+                <Border Grid.Column="0"
+                        Margin="10"
+                        CornerRadius="10">
+
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="1,0.5"
+                                             StartPoint="0,0.5">
+                            <GradientStop Color="Gray"
+                                          Offset="0"/>
+                            <GradientStop Color="DarkGray"
+                                          Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+
+                    <StackPanel>
+                        <Label Content="Feedback"
+                           Style="{StaticResource inverseLabel}"
+                           Margin="10"/>
+                        <Image Source="pack://application:,,,/WPF.Common;component/Images/Envelope_white.png"/>
+                    </StackPanel>
+
+
+                </Border>
+
+
+                <!-- Second column -->
+
+                <Grid Grid.Column="1"
+                      Margin="10">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0"
+                           Style="{StaticResource feedbackLabels}"
+                           Content="Name"/>
+                    <TextBox Grid.Row="1"
+                             Text="{Binding Path=Entity.Name}"/>
+
+                    <Label Grid.Row="2"
+                           Style="{StaticResource feedbackLabels}"
+                           Content="Email Address"/>
+                    <TextBox Grid.Row="3"
+                             Text="{Binding Path=Entity.EmailAddress}"/>
+
+                    <Label Grid.Row="4"
+                           Style="{StaticResource feedbackLabels}"
+                           Content="Phone Extension"/>
+                    <TextBox Grid.Row="5"
+                             Text="{Binding Path=Entity.PhoneExtension}"/>
+
+                    <Label Grid.Row="6"
+                           Style="{StaticResource feedbackLabels}"
+                           Content="Feedback Message"/>
+                    <TextBox Grid.Row="7"
+                             Text="{Binding Path=Entity.Message}"
+                             AcceptsReturn="true"
+                             TextWrapping="Wrap"
+                             Height="150"/>
+
+
+                    <StackPanel Grid.Row="8"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+
+                        <Button Content="Close"
+                            IsCancel="True"
+                            Style="{StaticResource cancelButton}"
+                            Click="CloseButton_Click"/>
+                        <Button Content="Send Feedback"
+                                IsDefault="True"
+                                Style="{StaticResource submitButton}"
+                                Click="SendFeedbackButton_Click"/>
+                    </StackPanel>
+
+
+
+                </Grid>
+
+            </Grid>
+
+        </ScrollViewer>
 
     </Border>
 
