@@ -38,11 +38,13 @@
             </MenuItem>
 
             <MenuItem Header="Users"
+                      IsEnabled="{Binding UserEntity.IsLoggedIn}"
                       Tag="WPF.Sample.UserControls.UserMaintenanceControl"
                       Click="MenuItem_Click" />
 
             <MenuItem Header="Feedback"
-                     Tag="WPF.Sample.UserControls.UserFeedbackControl"
+                      IsEnabled="{Binding UserEntity.IsLoggedIn}"
+                      Tag="WPF.Sample.UserControls.UserFeedbackControl"
                       Click="MenuItem_Click" />
 
             <MenuItem Header="{Binding Path=LoginMenuHeader}"

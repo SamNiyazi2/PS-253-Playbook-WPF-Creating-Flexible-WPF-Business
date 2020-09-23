@@ -34,6 +34,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -82,7 +83,7 @@
                        Text="{Binding Path=Entity.UserName}"/>
             <Label Grid.Row="2"
                    Grid.Column="1"
-                   Content="Password"/>
+                   Content="Password (p)"/>
             <PasswordBox Grid.Row="2"
                         Grid.Column="2"
                         ToolTip="Enter your password"
@@ -108,11 +109,18 @@
             </StackPanel>
 
 
+            <!-- Validation message area -->
+            <ListBox Grid.Row="4"
+                     Grid.Column="2"
+                     Style="{StaticResource validationArea}"
+                     Visibility="{Binding IsValidationVisible,Converter={StaticResource visibilityConverter}}"
+                     ItemsSource="{Binding ValidationMessages}"
+                     DisplayMemberPath="Message"/>
 
 
-            
-            
-                       
+
+
+
 
         </Grid>
 

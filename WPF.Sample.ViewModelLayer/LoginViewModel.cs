@@ -4,6 +4,7 @@
 
 using Common.Library;
 using System;
+using System.Linq;
 using WPF.Sample.DataLayer;
 
 namespace WPF.Sample.ViewModelLayer
@@ -16,7 +17,7 @@ namespace WPF.Sample.ViewModelLayer
             DisplayStatusMessage("Login to application");
             Entity = new User
             {
-                UserName = Environment.UserName
+                UserName = Environment.UserName 
             };
 
         }
@@ -38,16 +39,49 @@ namespace WPF.Sample.ViewModelLayer
 
         public bool validate()
         {
-            bool ret = true;
-            return ret;
+
+            Entity.IsLoggedIn = false;
+            ValidationMessages.Clear();
+
+            if (string.IsNullOrWhiteSpace(Entity.UserName))
+            {
+                AddValidationMessage("UserName", "User name is required");
+            }
+
+            if (string.IsNullOrWhiteSpace(Entity.Password))
+            {
+                AddValidationMessage("Password", "Password is required");
+            }
+
+
+            return ValidationMessages.Count == 0;
         }
 
 
         public bool ValidateCredentials()
         {
-            bool ret = true;
 
-            return ret;
+            bool isValid = false;
+            SampleDbContext db = null;
+
+            try
+            {
+                db = new SampleDbContext();
+
+                isValid = db.Users.Where(u => u.UserName == Entity.UserName && u.Password== Entity.Password).Count() > 0;
+                if (!isValid)
+                {
+                    AddValidationMessage("LoginFailed", "Invalid user name or password");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                PublishException(ex);
+            }
+
+            return isValid;
+
         }
 
 
