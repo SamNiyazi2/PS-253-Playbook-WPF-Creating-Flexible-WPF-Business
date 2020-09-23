@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF.Sample.ViewModelLayer;
+
+// 09/23/2020 04:23 am - SSN - [20200923-0404] - [004] - M04-04-Demo-Create-use-feedback-view-model (and UserMaintenance)
 
 namespace WPF.Sample.UserControls
 {
@@ -20,9 +23,18 @@ namespace WPF.Sample.UserControls
     /// </summary>
     public partial class UserMaintenanceControl : UserControl
     {
+
+        private UserMaintenanceViewModel _viewModel;
+
         public UserMaintenanceControl()
         {
             InitializeComponent();
+            _viewModel = (UserMaintenanceViewModel)this.Resources["viewModel"];
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Close();
         }
     }
 }
