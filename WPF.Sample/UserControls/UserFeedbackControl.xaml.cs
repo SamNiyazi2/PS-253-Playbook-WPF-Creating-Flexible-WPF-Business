@@ -30,6 +30,7 @@ namespace WPF.Sample.UserControls
             InitializeComponent();
 
             _viewModel = (UserFeedbackViewModel)this.Resources["viewModel"];
+            validationListBox.IsVisibleChanged += ValidationListBox_IsVisibleChanged;
 
         }
 
@@ -39,9 +40,16 @@ namespace WPF.Sample.UserControls
             _viewModel.Close();
         }
 
+
         private void SendFeedbackButton_Click(object sender, RoutedEventArgs e)
         {
+            _viewModel.SendFeedback();
+        }
 
+
+        private void ValidationListBox_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        { 
+            inputScroller.ScrollToEnd();
         }
     }
 }

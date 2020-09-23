@@ -21,12 +21,16 @@
 
     <Border Style="{StaticResource screenBorder}" >
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <ScrollViewer VerticalScrollBarVisibility="Auto"   Name="inputScroller">
             <Grid DataContext="{Binding Source={StaticResource viewModel}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
 
                 <!-- First column -->
@@ -120,9 +124,24 @@
 
                 </Grid>
 
+
+
+
+                <!-- Validation message area -->
+                <ListBox Grid.Row="1" Name="validationListBox"
+                     Grid.Column="2"
+                     Style="{StaticResource validationArea}"
+                     Visibility="{Binding IsValidationVisible,Converter={StaticResource visibilityConverter}}"
+                     ItemsSource="{Binding ValidationMessages}"
+                     DisplayMemberPath="Message"/>
+
+
             </Grid>
 
         </ScrollViewer>
+
+
+        
 
     </Border>
 
