@@ -11,8 +11,9 @@
 
     <Window.Resources>
         <vm:MainWindowViewModel x:Key="viewModel"
-                             InfoMessageTitle="Please wait while loading application..."
-                            StatusMessage="Creating Flexible WPF Business Application Screens" />
+                                InfoMessageTitle="Please wait while loading application..."
+                                StatusMessage="Creating Flexible WPF Business Application Screens"
+                                InfoMessageTimeout="1500"/>
     </Window.Resources>
     <Grid Background="{StaticResource gridBackgroundColor}"
         DataContext="{StaticResource viewModel}">
@@ -39,7 +40,7 @@
             <MenuItem Header="Users"
                       Tag="WPF.Sample.UserControls.UserMaintenanceControl"
                       Click="MenuItem_Click" />
-            
+
             <MenuItem Header="Feedback"
                      Tag="WPF.Sample.UserControls.UserFeedbackControl"
                       Click="MenuItem_Click" />

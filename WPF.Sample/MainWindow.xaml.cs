@@ -34,6 +34,17 @@ namespace WPF.Sample
         {
             switch ( e.MessageName)
             {
+
+                case MessageBrokerMessages.DISPLAY_TIMEOUT_INFO_MESSAGE_TITLE:
+                    _viewModel.InfoMessageTitle = e.MessagePayload.ToString();
+                    _viewModel.CreateInfoMessgaeTimer();
+                    break;
+
+                case MessageBrokerMessages.DISPLAY_TIMEOUT_INFO_MESSAGE:
+                    _viewModel.StatusMessage = e.MessagePayload.ToString();
+                    _viewModel.CreateInfoMessgaeTimer();
+                    break;
+
                 case MessageBrokerMessages.DISPLAY_STATUS_MESSAGE:
                     _viewModel.StatusMessage = e.MessagePayload.ToString();
                     break;

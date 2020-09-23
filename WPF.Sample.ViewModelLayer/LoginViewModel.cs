@@ -14,5 +14,14 @@ namespace WPF.Sample.ViewModelLayer
             DisplayStatusMessage("Login to application");
         }
 
+        public override void Close(bool wasCancelled = true)
+        {
+            if ( wasCancelled)
+            {
+                MessageBroker.Instance.SendMessage(MessageBrokerMessages.DISPLAY_TIMEOUT_INFO_MESSAGE_TITLE, "User not logged in.");
+            }
+            base.Close(wasCancelled);
+        }
+
     }
 }

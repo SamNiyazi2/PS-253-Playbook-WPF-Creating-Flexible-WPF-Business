@@ -1,5 +1,7 @@
 ﻿using Common.Library;
-using System.Threading;
+
+using System.Timers;
+
 
 namespace WPF.Sample.ViewModelLayer
 {
@@ -9,6 +11,11 @@ namespace WPF.Sample.ViewModelLayer
 
         // 09/22/2020 04:17 pm - SSN - [20200922-1617] - [001] - M02--08 - Demo: load resource in the background
         private const int SECONDS = 1500;
+
+
+        // 09/23/2020 04:30 am - SSN - [20200923-0428] - [001] - M04-06 - Create informational messages that timeout
+        private Timer _InfoMessageTimer = null;
+        private int _InfoMessageTimeout;
 
 
         private string _LoginMenuHeader = "Login";
@@ -24,6 +31,19 @@ namespace WPF.Sample.ViewModelLayer
 
 
         #region Public Properties
+        
+
+        public int InfoMessageTimeout
+        {
+            get { return _InfoMessageTimeout; }
+            set
+            {
+                _InfoMessageTimeout = value;
+                RaisePropertyChanged("InfoMessageTimeout");
+
+            }
+        }
+
         public string LoginMenuHeader
         {
             get { return _LoginMenuHeader; }
@@ -92,19 +112,19 @@ namespace WPF.Sample.ViewModelLayer
         public void LoadStateCodes()
         {
             // Todo: Write code to load state codes here
-            Thread.Sleep(SECONDS);
+            System.Threading.Thread.Sleep(SECONDS);
         }
 
         public void LoadCountryCodes()
         {
             // Todo: Write code to load country codes here
-            Thread.Sleep(SECONDS);
+            System.Threading.Thread.Sleep(SECONDS);
         }
 
         public void LoadEmployeeTypes()
         {
             //Todo: 
-            Thread.Sleep(SECONDS);
+            System.Threading.Thread.Sleep(SECONDS);
         }
 
         public void ClearInfoMessages()
@@ -114,6 +134,26 @@ namespace WPF.Sample.ViewModelLayer
             IsInfoMessageVisible = false;
         }
 
+
+
+
+        public virtual void CreateInfoMessgaeTimer()
+        {
+            if (_InfoMessageTimer == null)
+            {
+                _InfoMessageTimer = new Timer(_InfoMessageTimeout);
+                _InfoMessageTimer.Elapsed += _InfoMessageTimer_Elapsed;
+            }
+
+            _InfoMessageTimer.AutoReset = false;
+            _InfoMessageTimer.Enabled = true;
+            IsInfoMessageVisible = true;
+        }
+
+        private void _InfoMessageTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            IsInfoMessageVisible = false;
+        }
 
     }
 }
