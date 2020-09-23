@@ -25,8 +25,8 @@
             </LinearGradientBrush>
         </Border.Background>
 
-     
-        
+
+
         <Grid DataContext="{Binding Source={StaticResource viewModel}}">
 
             <Grid.RowDefinitions>
@@ -48,7 +48,7 @@
                Effect="{StaticResource buttonShadow}"
                Source="pack://applicatoin:,,,/WPF.Common;component/images/key_color.png"/>
 
-            
+
             <Border Grid.Row="0"
                     Grid.Column="1"
                     Grid.ColumnSpan="2"
@@ -73,7 +73,7 @@
 
             </Border>
 
-           
+
             <Label Grid.Row="1"
                    Grid.Column="1"
                    Content="User Name"/>
@@ -88,7 +88,7 @@
                         Grid.Column="2"
                         ToolTip="Enter your password"
                         Name="txtPassword"/>
-            
+
             <StackPanel Grid.Row="3"
                         Grid.Column="2"
                         HorizontalAlignment="Right"

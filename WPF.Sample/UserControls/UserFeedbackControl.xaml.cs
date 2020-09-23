@@ -48,7 +48,7 @@ namespace WPF.Sample.UserControls
 
 
         private void ValidationListBox_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        { 
+        {
             inputScroller.ScrollToEnd();
         }
     }

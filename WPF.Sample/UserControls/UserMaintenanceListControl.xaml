@@ -8,7 +8,8 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
 
-    <ListView ItemsSource="{Binding Path=Users}">
+    <ListView ItemsSource="{Binding Path=Users}"
+              SelectedItem="{Binding Path=Entity}">
 
         <ListView.View>
 
@@ -56,11 +57,11 @@
                             <Button Style="{StaticResource toolbarButton}"
                                     Tag="{Binding}"
                                     ToolTip="Delete current user">
-                                
+
                                 <Image Source="pack://application:,,,/WPF.common;component/Images/Trash_Black.png"/>
-                                
+
                             </Button>
-                            
+
                         </DataTemplate>
 
                     </GridViewColumn.CellTemplate>

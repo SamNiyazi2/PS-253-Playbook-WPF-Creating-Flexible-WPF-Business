@@ -17,7 +17,22 @@
 
     <Border Style="{StaticResource screenBorder}" >
 
-        <local:UserMaintenanceListControl DataContext="{StaticResource viewModel}" />
+        <Grid DataContext="{StaticResource viewModel}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <local:UserMaintenanceListControl Grid.Row="1" 
+                                          x:Name="listControl" 
+                                          DataContext="{StaticResource viewModel}" />
+            <local:UserMaintenanceDetailControl Grid.Row="2"
+                                    x:Name="detailControl"
+                                    DataContext="{StaticResource viewModel}"/>
+
+        </Grid>
 
     </Border>
 

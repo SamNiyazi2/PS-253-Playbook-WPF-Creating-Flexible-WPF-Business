@@ -65,7 +65,7 @@ namespace WPF.Sample.ViewModelLayer
         {
             bool ret = false;
 
-            if ( Save() )
+            if (Save())
             {
                 MessageBroker.Instance.SendMessage(MessageBrokerMessages.DISPLAY_TIMEOUT_INFO_MESSAGE_TITLE, "Feedback message sent.");
 
@@ -73,7 +73,7 @@ namespace WPF.Sample.ViewModelLayer
 
                 Close(false);
             }
-            
+
             return ret;
 
         }
