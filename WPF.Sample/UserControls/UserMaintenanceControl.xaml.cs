@@ -41,5 +41,30 @@ namespace WPF.Sample.UserControls
         {
             _viewModel.LoadUsers();
         }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.BeginEdit(true);
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.BeginEdit(false);
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            listControl.DeleteUser();
+        }
+
+        private void UndoButton_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.CancelEdit();
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF.Sample.DataLayer;
+using WPF.Sample.ViewModelLayer;
 
 namespace WPF.Sample.UserControls
 {
@@ -23,6 +25,44 @@ namespace WPF.Sample.UserControls
         public UserMaintenanceListControl()
         {
             InitializeComponent();
+        }
+
+
+        // 09/23/2020 02:13 pm - SSN - [20200923-1400] - [002] - M08-09 - Demo: Add button click events to change state 
+
+        private UserMaintenanceViewModel _viewModel;
+
+
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            getBoundRecord(sender);
+            _viewModel.BeginEdit(false);
+        }
+
+        private void getBoundRecord(object sender)
+        {
+            _viewModel.Entity = (User)((Button)sender).Tag;
+       
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            getBoundRecord(sender);
+            DeleteUser();
+        }
+
+        public void DeleteUser()
+        {
+            if (MessageBox.Show("Delete user " + _viewModel.Entity.LastName + ", " + _viewModel.Entity.FirstName + "?", "Confirm Deletion", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                _viewModel.Delete();
+            }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            _viewModel = (UserMaintenanceViewModel)this.DataContext;
         }
     }
 }

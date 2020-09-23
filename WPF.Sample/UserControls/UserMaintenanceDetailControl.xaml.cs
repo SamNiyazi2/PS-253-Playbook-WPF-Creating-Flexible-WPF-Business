@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF.Sample.ViewModelLayer;
 
 namespace WPF.Sample.UserControls
 {
@@ -23,6 +24,27 @@ namespace WPF.Sample.UserControls
         public UserMaintenanceDetailControl()
         {
             InitializeComponent();
+        }
+
+        private UserMaintenanceViewModel _viewModel;
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            // 09/23/2020 02:02 pm - SSN - [20200923-1400] - [001] - M08-09 - Demo: Add button click events to change state 
+
+            _viewModel = (UserMaintenanceViewModel)this.DataContext;
+
+
+        }
+
+        private void UndoButton_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.CancelEdit();
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Save();
         }
     }
 }

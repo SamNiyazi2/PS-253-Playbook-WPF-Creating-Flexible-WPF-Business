@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF.Sample.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             Loaded="UserControl_Loaded">
 
 
     <ListView ItemsSource="{Binding Path=Users}"
@@ -20,6 +21,7 @@
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
                             <Button Style="{StaticResource toolbarButton}"
+                                    Click="EditButton_Click"
                                     Tag="{Binding}"
                                     ToolTip="Edit current user">
                                 <Image Source="pack://application:,,,/WPF.Common;component/Images/Edit_Black.png"/>
@@ -56,6 +58,7 @@
                         <DataTemplate>
 
                             <Button Style="{StaticResource toolbarButton}"
+                                    Click="DeleteButton_Click"
                                     Tag="{Binding}"
                                     ToolTip="Delete current user">
 

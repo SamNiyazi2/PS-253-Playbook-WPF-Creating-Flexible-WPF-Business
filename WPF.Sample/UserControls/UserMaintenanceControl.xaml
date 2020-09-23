@@ -28,6 +28,7 @@
             <ToolBar Grid.Row="0">
 
                 <Button Style="{StaticResource toolbarButton}"
+                        Click="AddButton_Click"
                         IsEnabled="{Binding Path=IsListEnabled}"
                         ToolTip="Add new user">
                     <Image Source="pack://application:,,,/WPF.Common;component/Images/Plus_black.png"
@@ -37,14 +38,15 @@
                 <Separator/>
 
                 <Button Style="{StaticResource toolbarButton}"
+                        Click="EditButton_Click"
                         IsEnabled="{Binding Path=IsListEnabled}"
-                        
                         ToolTip="Edit current user">
                     <Image Source="pack://application:,,,/WPF.Common;component/Images/Edit_black.png"
                            Style="{StaticResource toolbarImage}"/>
                 </Button>
 
                 <Button Style="{StaticResource toolbarButton}"
+                        Click="DeleteButton_Click"
                         IsEnabled="{Binding Path=IsListEnabled}"
                         ToolTip="Delete current user">
                     <Image Source="pack://application:,,,/WPF.Common;component/Images/Trash_black.png"
@@ -54,6 +56,7 @@
                 <Separator/>
 
                 <Button Style="{StaticResource toolbarButton}"
+                        Click="UndoButton_Click"
                         IsEnabled="{Binding Path=IsDetailEnabled}"
                         ToolTip="Undo changes">
                     <Image Source="pack://application:,,,/WPF.Common;component/Images/Undo_black.png"
@@ -61,6 +64,7 @@
                 </Button>
 
                 <Button Style="{StaticResource toolbarButton}"
+                        Click="SaveButton_Click"
                         IsEnabled="{Binding Path=IsDetailEnabled}"
                         ToolTip="Save changes">
                     <Image Source="pack://application:,,,/WPF.Common;component/Images/Save_black.png"
