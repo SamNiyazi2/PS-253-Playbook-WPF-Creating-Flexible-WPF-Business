@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace WPF.Sample.ViewModelLayer
 {
-    public class UserMaintenanceViewModel : ViewModelBase
+    public class UserMaintenanceViewModel : UserMaintenanceListViewModel
     {
         public UserMaintenanceViewModel()
         {

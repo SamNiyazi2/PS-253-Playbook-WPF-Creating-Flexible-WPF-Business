@@ -36,5 +36,10 @@ namespace WPF.Sample.UserControls
         {
             _viewModel.Close();
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            _viewModel.LoadUsers();
+        }
     }
 }
