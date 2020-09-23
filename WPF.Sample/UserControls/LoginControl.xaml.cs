@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF.Sample.ViewModelLayer;
+
+// 09/23/2020 02:29 am - SSN - [20200923-0216] - [002] - M03-06 - Create the login view model class 
 
 namespace WPF.Sample.UserControls
 {
@@ -20,9 +23,18 @@ namespace WPF.Sample.UserControls
     /// </summary>
     public partial class LoginControl : UserControl
     {
+
+        private LoginViewModel _viewModel = null;
+
         public LoginControl()
         {
             InitializeComponent();
+            _viewModel = (LoginViewModel)this.Resources["viewModel"];
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Close();
         }
     }
 }

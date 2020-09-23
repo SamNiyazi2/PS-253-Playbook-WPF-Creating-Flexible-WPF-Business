@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Library;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,9 +21,19 @@ namespace WPF.Sample
         {
             InitializeComponent();
             _viewModel = (MainWindowViewModel)this.Resources["viewModel"];
+
+            MessageBroker.Instance.MessageReceived += Instance_MessageReceived;
         }
 
-
+        private void Instance_MessageReceived(object sender, MessageBrokerEventArgs e)
+        {
+            switch ( e.MessageName)
+            {
+                case MessageBrokerMessages.CLOSE_USER_CONTROL:
+                    CloseUserControl();
+                    break;
+            }
+        }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
