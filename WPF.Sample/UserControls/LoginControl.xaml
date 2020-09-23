@@ -6,7 +6,6 @@
              xmlns:local="clr-namespace:WPF.Sample.UserControls"
              xmlns:vm="clr-namespace:WPF.Sample.ViewModelLayer;assembly=WPF.Sample.ViewModelLayer"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
              Style="{StaticResource screenStyle}">
 
     <UserControl.Resources>
@@ -15,13 +14,107 @@
 
     <Border Style="{StaticResource screenBorder}" >
 
-        <StackPanel>
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0.5,0.5"
+                                 EndPoint="0.5,1">
+                <GradientStop Color="DarkGray"
+                              Offset="0"/>
+                <GradientStop Color="Gray"
+                              Offset="1"/>
+
+            </LinearGradientBrush>
+        </Border.Background>
+
+     
+        
+        <Grid DataContext="{Binding Source={StaticResource viewModel}}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image Grid.Row="0"
+               Grid.Column="0"
+               Margin="4,4,12,20"
+               Effect="{StaticResource buttonShadow}"
+               Source="pack://applicatoin:,,,/WPF.Common;component/images/key_color.png"/>
+
             
-        <TextBlock Text="Login Screen" FontSize="18" Margin="20,80"/>
-            <Button Content="Close"
-                HorizontalAlignment="Left"
-                Click="CloseButton_Click"/>
-        </StackPanel>
+            <Border Grid.Row="0"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Effect="{StaticResource buttonShadow}"
+                    Margin="4,4,4,20"
+                    CornerRadius="10">
+
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1"
+                     StartPoint="0.5,0">
+                        <GradientStop Color="Gray"
+                                      Offset="0"/>
+                        <GradientStop Color="DarkGray"
+                                      Offset="1"/>
+                    </LinearGradientBrush>
+
+                </Border.Background>
+
+                <Label FontSize="18"
+                   Style="{StaticResource inverseLabel}"
+                   Content="Please login to access this application"/>
+
+            </Border>
+
+           
+            <Label Grid.Row="1"
+                   Grid.Column="1"
+                   Content="User Name"/>
+            <TextBox Grid.Row="1"
+                       Grid.Column="2"
+                       ToolTip="Enter your user name"
+                       Text="{Binding Path=Entity.UserName}"/>
+            <Label Grid.Row="2"
+                   Grid.Column="1"
+                   Content="Password"/>
+            <PasswordBox Grid.Row="2"
+                        Grid.Column="2"
+                        ToolTip="Enter your password"
+                        Name="txtPassword"/>
+            
+            <StackPanel Grid.Row="3"
+                        Grid.Column="2"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+
+                <Button ToolTip="Don't login"
+                        Content="Cancel"
+                        IsCancel="True"
+                        Style="{StaticResource cancelButton}"
+                        Click="CancelButton_Click"/>
+
+                <Button ToolTip="Login to applicaton"
+                        Content="Login"
+                        IsDefault="True"
+                        Style="{StaticResource submitButton}"
+                        Click="LoginButton_Click"/>
+
+            </StackPanel>
+
+
+
+
+            
+            
+                       
+
+        </Grid>
 
     </Border>
 

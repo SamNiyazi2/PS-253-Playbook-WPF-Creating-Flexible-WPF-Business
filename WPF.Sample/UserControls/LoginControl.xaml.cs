@@ -32,9 +32,16 @@ namespace WPF.Sample.UserControls
             _viewModel = (LoginViewModel)this.Resources["viewModel"];
         }
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        // 09/23/2020 05:25 am - SSN - [20200923-0428] - [002] - M04-06 - Create informational messages that timeout
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        { 
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.Close();
         }
+
     }
 }
