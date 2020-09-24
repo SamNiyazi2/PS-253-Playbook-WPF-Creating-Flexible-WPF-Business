@@ -43,7 +43,7 @@ namespace WPF.Sample.UserControls
         private void getBoundRecord(object sender)
         {
             _viewModel.Entity = (User)((Button)sender).Tag;
-       
+
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -54,6 +54,13 @@ namespace WPF.Sample.UserControls
 
         public void DeleteUser()
         {
+
+            if (MessageBox.Show("Do you have access to the database?" + Environment.NewLine +
+                "You cannot set passwords", "Confirm access to database", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes)
+            {
+                return;
+            }
+
             if (MessageBox.Show("Delete user " + _viewModel.Entity.LastName + ", " + _viewModel.Entity.FirstName + "?", "Confirm Deletion", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 _viewModel.Delete();

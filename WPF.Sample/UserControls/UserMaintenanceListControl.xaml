@@ -36,7 +36,7 @@
 
                 <GridViewColumn Header="User Name"
                                 Width="Auto"
-                                DisplayMemberBinding="{Binding Path=Username}"/>
+                                DisplayMemberBinding="{Binding Path=UserName}"/>
 
                 <GridViewColumn Header="First Name"
                                 Width="auto"

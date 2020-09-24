@@ -39,7 +39,7 @@
 
                 <Button Style="{StaticResource toolbarButton}"
                         Click="EditButton_Click"
-                        IsEnabled="{Binding Path=IsListEnabled}"
+                        IsEnabled="{Binding Path=IsRecordSelectedViewOnly}"
                         ToolTip="Edit current user">
                     <Image Source="pack://application:,,,/WPF.Common;component/Images/Edit_black.png"
                            Style="{StaticResource toolbarImage}"/>
@@ -47,7 +47,7 @@
 
                 <Button Style="{StaticResource toolbarButton}"
                         Click="DeleteButton_Click"
-                        IsEnabled="{Binding Path=IsListEnabled}"
+                        IsEnabled="{Binding Path=IsRecordSelectedViewOnly}"
                         ToolTip="Delete current user">
                     <Image Source="pack://application:,,,/WPF.Common;component/Images/Trash_black.png"
                            Style="{StaticResource toolbarImage}"/>

@@ -31,7 +31,7 @@
 
         <TextBox Grid.Row="0"
                  Grid.Column="1"
-                 Text="{Binding Path=Entity.UserName}" />
+                 Text="{Binding Path=Entity.UserName}" x:Name="username"/>
 
         <Label Grid.Row="1"
                Content="First Name"/>
@@ -96,6 +96,14 @@
 
         </StackPanel>
 
+
+        <!-- Validation message area -->
+        <ListBox Grid.Row="5"
+                     Grid.Column="2"
+                     Style="{StaticResource validationArea}"
+                     Visibility="{Binding IsValidationVisible,Converter={StaticResource visibilityConverter}}"
+                     ItemsSource="{Binding ValidationMessages}"
+                     DisplayMemberPath="Message"/>
 
 
     </Grid>

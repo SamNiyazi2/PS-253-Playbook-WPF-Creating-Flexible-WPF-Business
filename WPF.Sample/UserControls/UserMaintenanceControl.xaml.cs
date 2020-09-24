@@ -62,9 +62,30 @@ namespace WPF.Sample.UserControls
             _viewModel.CancelEdit();
         }
 
+        private void GetControlsList(Visual c)
+        {
+            int controlsCount = VisualTreeHelper.GetChildrenCount(c);
+
+            for (int x = 0; x < controlsCount; x++)
+            {
+                Visual v = (Visual)VisualTreeHelper.GetChild(c, x);
+
+                if (v.GetType().Name == "TextBox")
+                {
+                    TextBox tb = (TextBox)v;
+                    tb.Focus();
+                }
+                if (VisualTreeHelper.GetChildrenCount(v) > 0)
+                {
+                    GetControlsList(v);
+                }
+
+            }
+        }
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-
+            GetControlsList(detailControl);
+            _viewModel.Save();
         }
     }
 }
