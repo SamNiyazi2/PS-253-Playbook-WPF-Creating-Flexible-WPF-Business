@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="EntityClasses\User.cs" />
     <Compile Include="EntityClasses\UserFeedback.cs" />
+    <Compile Include="Helpers\SeedDatabase.cs" />
     <Compile Include="Models\SampleDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

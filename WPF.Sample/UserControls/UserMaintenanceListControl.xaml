@@ -6,16 +6,21 @@
              xmlns:local="clr-namespace:WPF.Sample.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             Loaded="UserControl_Loaded">
+             Loaded="UserControl_Loaded" MaxWidth="610">
 
-
-    <ListView ItemsSource="{Binding Path=Users}"
+    <ScrollViewer Height="200">
+        
+        <ListView ItemsSource="{Binding Path=Users}"
               SelectedItem="{Binding Path=Entity}"
-              IsEnabled="{Binding Path=IsListEnabled}">
+              IsEnabled="{Binding Path=IsListEnabled}"
+                ScrollViewer.CanContentScroll="True" 
+                ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  >
 
         <ListView.View>
 
-            <GridView>
+            <GridView  >
 
                 <GridViewColumn Header="Edit">
                     <GridViewColumn.CellTemplate>
@@ -79,6 +84,7 @@
         </ListView.View>
 
     </ListView>
-
+        
+    </ScrollViewer>
 
 </UserControl>

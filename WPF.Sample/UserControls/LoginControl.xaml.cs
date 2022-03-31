@@ -30,6 +30,21 @@ namespace WPF.Sample.UserControls
         {
             InitializeComponent();
             _viewModel = (LoginViewModel)this.Resources["viewModel"];
+
+        }
+         
+
+        // 03/30/2022 05:49 pm - SSN - Set focus
+        protected override void OnRender(DrawingContext drawingContext)
+        {
+            base.OnRender(drawingContext);
+
+
+            // Sets the focused element in focusScope1
+            // focusScope1 is a StackPanel.
+            FocusManager.SetFocusedElement(mainGrid, UserName);
+            txtPassword.Password = _viewModel.Entity.Password;
+
         }
 
         // 09/23/2020 05:25 am - SSN - [20200923-0428] - [002] - M04-06 - Create informational messages that timeout

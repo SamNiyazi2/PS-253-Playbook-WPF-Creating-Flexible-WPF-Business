@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Playbook WPF: Creating Flexible WPF Business Application Screens"
         WindowStartupLocation="CenterScreen"
-        Loaded="Window_Loaded">
+        Loaded="Window_Loaded" Width="640" Height="600">
 
     <Window.Resources>
         <vm:MainWindowViewModel x:Key="viewModel"
@@ -16,7 +16,7 @@
                                 InfoMessageTimeout="1500"/>
     </Window.Resources>
     <Grid Background="{StaticResource gridBackgroundColor}"
-        DataContext="{StaticResource viewModel}">
+        DataContext="{StaticResource viewModel}"  >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -62,9 +62,9 @@
                 Style="{StaticResource infoMessageArea}">
 
             <StackPanel>
-                <TextBlock FontSize="40"
-                           Text="{Binding Path=InfoMessageTitle}"/>
                 <TextBlock FontSize="24"
+                           Text="{Binding Path=InfoMessageTitle}"/>
+                <TextBlock FontSize="16"
                            Text="{Binding Path=InfoMessage}"/>
 
             </StackPanel>

@@ -4,7 +4,7 @@ using Common.Library;
 
 namespace WPF.Sample.DataLayer
 {
-    [Table("User", Schema = "dbo")]
+    [Table("User")]
     public class User : CommonBase
     {
         private int _UserId;
@@ -72,6 +72,8 @@ namespace WPF.Sample.DataLayer
         }
 
         [Required]
+        // 03/30/2022 08:52 am - SSN
+        [EmailAddress(ErrorMessage = "Invalid email address")]
         public string EmailAddress
         {
             get { return _EmailAddress; }

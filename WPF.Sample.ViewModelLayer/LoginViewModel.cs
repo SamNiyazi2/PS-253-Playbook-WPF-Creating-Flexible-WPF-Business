@@ -15,10 +15,12 @@ namespace WPF.Sample.ViewModelLayer
         public LoginViewModel()
         {
             DisplayStatusMessage("Login to application");
-            Entity = new User
-            {
-                UserName = Environment.UserName 
-            };
+
+            // 03/30/2022 05:39 pm - SSN
+            // Entity = new User {UserName = Environment.UserName };
+
+            SampleDbContext db = new SampleDbContext();
+            Entity = db.Users.OrderBy(r=>r.UserId).FirstOrDefault();
 
         }
 
@@ -68,10 +70,21 @@ namespace WPF.Sample.ViewModelLayer
             {
                 db = new SampleDbContext();
 
-                isValid = db.Users.Where(u => u.UserName == Entity.UserName && u.Password== Entity.Password).Count() > 0;
-                if (!isValid)
+                // 03/30/2022 08:27 am - SSN
+                // isValid = db.Users.Where(u => u.UserName == Entity.UserName && u.Password== Entity.Password).Count() > 0;
+
+                User tempEntity = db.Users.Where(u => u.UserName == Entity.UserName && u.Password == Entity.Password).FirstOrDefault();
+
+                //if (!isValid)
+                if (tempEntity == null)
                 {
                     AddValidationMessage("LoginFailed", "Invalid user name or password");
+                }
+                else
+                {
+                    isValid = true;
+                    Entity = tempEntity;
+                    Entity.Password = "";
                 }
             }
             catch (Exception ex)

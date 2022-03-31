@@ -38,7 +38,7 @@ namespace WPF.Sample
 
                 case MessageBrokerMessages.LOGIN_SUCCESS:
                     _viewModel.UserEntity = (User)e.MessagePayload;
-                    _viewModel.LoginMenuHeader = "Logout " + _viewModel.UserEntity.UserName;
+                    _viewModel.LoginMenuHeader = "Logout " + _viewModel.UserEntity.FirstName;
                     break;
 
                 case MessageBrokerMessages.LOGOUT:
@@ -63,6 +63,15 @@ namespace WPF.Sample
                 case MessageBrokerMessages.CLOSE_USER_CONTROL:
                     CloseUserControl();
                     break;
+            }
+        }
+
+        // 03/30/2022 08:12 am - SSN 
+        public User LoggedInUser
+        {
+            get
+            {
+                return _viewModel.UserEntity;
             }
         }
 
@@ -189,6 +198,10 @@ namespace WPF.Sample
             await Dispatcher.BeginInvoke(new Action(() =>
           {
               _viewModel.LoadStateCodes();
+
+              // 03/31/2022 12:48 am - SSN
+              DataLayer.Helpers.DatabaseHelpers.seedDatabase();
+
           }), DispatcherPriority.Background);
 
 

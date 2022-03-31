@@ -54,6 +54,21 @@ namespace WPF.Sample.UserControls
 
         public void DeleteUser()
         {
+            foreach (Window win in Application.Current.Windows)
+            {
+                if (win.GetType() == typeof(MainWindow))
+                {
+                    MainWindow mw = (MainWindow)win;
+                    if (mw.LoggedInUser.UserId == _viewModel.Entity.UserId)
+                    {
+
+                        MessageBox.Show("You can't delete your own record!" + Environment.NewLine +
+                                        "Invalid Action", "Invalid Action", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
+            }
+
 
             if (MessageBox.Show("Do you have access to the database?" + Environment.NewLine +
                 "You cannot set passwords", "Confirm access to database", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes)
