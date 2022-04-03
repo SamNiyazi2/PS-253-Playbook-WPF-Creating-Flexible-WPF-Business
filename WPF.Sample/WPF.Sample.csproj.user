@@ -1,13 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <PublishUrlHistory />
-    <InstallUrlHistory />
+    <PublishUrlHistory>C:\Sams_P\PS\creating-flexible-wpf-business-application-screens-playbook\ps-253-wpf-publish\Publish\|C:\Sams_P\PS\creating-flexible-wpf-business-application-screens-playbook\ps-253-wpf-publish\Publish_v02\|C:\Sams_P\PS\creating-flexible-wpf-business-application-screens-playbook\ps-253-wpf-publish\</PublishUrlHistory>
+    <InstallUrlHistory>http://p253publish.nonbs.org/|http://localhost/|//SSNMACH006/ps-253-wpf-Install_v02/|https://victorious-rock-0e169d810.1.azurestaticapps.net/Publish/|https://victorious-rock-0e169d810.1.azurestaticapps.net/</InstallUrlHistory>
     <SupportUrlHistory />
     <UpdateUrlHistory />
     <BootstrapperUrlHistory />
     <ErrorReportUrlHistory />
     <FallbackCulture>en-US</FallbackCulture>
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
+    <ProjectView>ShowAllFiles</ProjectView>
+  </PropertyGroup>
+  <PropertyGroup>
+    <EnableSecurityDebugging>false</EnableSecurityDebugging>
   </PropertyGroup>
 </Project>

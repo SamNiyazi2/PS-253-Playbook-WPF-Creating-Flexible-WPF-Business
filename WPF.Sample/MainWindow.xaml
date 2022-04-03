@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:WPF.Sample.ViewModelLayer;assembly=WPF.Sample.ViewModelLayer"
         mc:Ignorable="d"
-        Title="Playbook WPF: Creating Flexible WPF Business Application Screens"
+        Title="PS-253 - Playbook WPF: Creating Flexible WPF Business Application Screens"
         WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded" Width="640" Height="600">
 
