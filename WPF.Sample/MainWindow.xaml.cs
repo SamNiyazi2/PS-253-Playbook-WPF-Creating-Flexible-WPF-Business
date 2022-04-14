@@ -38,6 +38,11 @@ namespace WPF.Sample
 
                 case MessageBrokerMessages.LOGIN_SUCCESS:
                     _viewModel.UserEntity = (User)e.MessagePayload;
+
+                    // 04/14/2022 09:10 am - SSN
+
+                    _viewModel.UserEntity.HaveValidConnection = App.HaveDatabaseConnection;
+
                     _viewModel.LoginMenuHeader = "Logout " + _viewModel.UserEntity.FirstName;
                     break;
 
@@ -187,47 +192,110 @@ namespace WPF.Sample
 
             await LoadApplication();
 
-            _viewModel.ClearInfoMessages();
         }
 
 
         // 09/22/2020 04:22 pm - SSN - [20200922-1617] - [002] - M02--08 - Demo: load resource in the background
         public async Task LoadApplication()
         {
-            _viewModel.InfoMessage = "Loading state codes...";
-            await Dispatcher.BeginInvoke(new Action(() =>
-          {
-              _viewModel.LoadStateCodes();
+            _viewModel.InfoMessage = "Connecting to database...";
+            try
+            {
 
-              // 03/31/2022 12:48 am - SSN
-              DataLayer.Helpers.DatabaseHelpers.seedDatabase();
+                bool haveConnection = false;
 
-          }), DispatcherPriority.Background);
+                // 03/31/2022 12:48 am - SSN
+                // 04/14/2022 09:06 am - SSN - Revise to pickup connection string from Azure vault.
+                Task t1 = await DataLayer.Helpers.DatabaseHelpers.seedDatabase();
 
+                Task t2 = t1.ContinueWith(async t =>
+                    {
+                        await Dispatcher.BeginInvoke(new Action(() =>
+                        {
 
-            _viewModel.InfoMessage = "Loading country codes...";
-            await Dispatcher.BeginInvoke(new Action(() =>
-         {
-             _viewModel.LoadCountryCodes();
-
-         }), DispatcherPriority.Background);
-
-
-            _viewModel.InfoMessage = "Loading employee types...";
-            await Dispatcher.BeginInvoke(new Action(() =>
-          {
-              _viewModel.LoadEmployeeTypes();
-
-          }), DispatcherPriority.Background);
+                            _viewModel.InfoMessageTitle = "Failed to connect to database.  (202)";
+                            _viewModel.InfoMessage = "Click to close application";
 
 
+                            this.MouseDown += MainWindow_MouseDown_FailedConnection;
 
 
+                        }), DispatcherPriority.Normal);
+
+                        return t;
+
+                    }, TaskContinuationOptions.OnlyOnFaulted);
+
+                Task t3 = t1.ContinueWith(t =>
+                     {
+                         TaskStatus status = t.Status;
+                         var ex = t.Exception;
+
+                         string test = "Ran to completion.";
+                         haveConnection = true;
+                         return t;
+
+                     }, TaskContinuationOptions.OnlyOnRanToCompletion);
+
+
+                Task.WaitAll(t1, t3);
+
+
+
+                if (!haveConnection) return;
+
+                _viewModel.InfoMessage = "Loading state codes...";
+                await Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        _viewModel.LoadStateCodes();
+
+                    }), DispatcherPriority.Background);
+
+
+
+
+                _viewModel.InfoMessage = "Loading country codes...";
+                await Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        _viewModel.LoadCountryCodes();
+
+                    }), DispatcherPriority.Background);
+
+
+                _viewModel.InfoMessage = "Loading employee types...";
+                await Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        _viewModel.LoadEmployeeTypes();
+
+                    }), DispatcherPriority.Background);
+
+                _viewModel.UserEntity.HaveValidConnection = true;
+
+                App.HaveDatabaseConnection = true;
+
+                _viewModel.ClearInfoMessages();
+
+            }
+            catch (Exception ex)
+            {
+                _viewModel.InfoMessageTitle = "Failed to connect to database.  (101)";
+                _viewModel.InfoMessage = "Click to close application";
+
+                await Dispatcher.BeginInvoke(new Action(() =>
+                {
+
+                }), DispatcherPriority.Background);
+
+
+            }
 
 
         }
 
-
-
+        /// 04/14/2022 08:06 am - SSN
+        private void MainWindow_MouseDown_FailedConnection(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

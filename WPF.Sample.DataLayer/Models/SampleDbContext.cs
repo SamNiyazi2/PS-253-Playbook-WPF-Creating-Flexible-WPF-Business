@@ -1,16 +1,68 @@
 ﻿using Common.Library;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
+using ssn_AzureKeyVault;
+using System.Threading.Tasks;
+using ssn_AzureKeyVault.Models;
+using System;
 
 namespace WPF.Sample.DataLayer
 {
     public partial class SampleDbContext : DbContext
     {
-        public SampleDbContext() : base("name=Samples")
+        // 04/13/2022 07:20 am - SSN - Check connectionstring
+        #region Override connectionString
+        // public SampleDbContext() : base("name=Samples")
+        public SampleDbContext() : base(getConnectionString()) { }
+
+        static private string getConnectionString()
         {
+            string connectionString = "Samples";
+
+            try
+            {
+
+                //// Tested OK
+                //    Task t = Task.Run(async () =>
+                //      {
+                //          string temp = await ssn_AzureKeyVault.VaultDataAccess.getSecret("ssn-key-test-20210224-001");
+
+                //          object connectionStringObj = ConfigurationManager.ConnectionStrings["Samples"];
+
+                //          if (connectionStringObj != null) connectionString = connectionStringObj.ToString();
+
+                //          if (string.IsNullOrEmpty(connectionString)) { connectionString = "Samples"; }
+
+
+                //      });
+
+                //    t.Wait();
+
+
+
+                ssn_MicrosoftToken temp = ssn_AzureKeyVault.RestAccess.getSecret("ssn-key-test-20210224-001");
+                if (!string.IsNullOrWhiteSpace(temp.error))
+                {
+                    throw new Exception("ps-253-20220414-0714: Failed to get connection string.");
+
+                }
+            }
+            catch (Exception ex )
+            {
+                string message = ex.Message;
+                throw;
+            }
+
+
+
+            return connectionString;
+
         }
+
+        #endregion Override connectionString
 
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserFeedback> UserFeedback { get; set; }
@@ -50,12 +102,12 @@ namespace WPF.Sample.DataLayer
                 .Property(x => x.UserName)
                 .IsRequired()
                 .HasMaxLength(20);
-        
+
             modelBuilder.Entity<User>()
                 .Property(x => x.Password)
                 .IsRequired()
                 .HasMaxLength(40);
-    }
+        }
 
         private void setup_UserFeedback(DbModelBuilder modelBuilder)
         {

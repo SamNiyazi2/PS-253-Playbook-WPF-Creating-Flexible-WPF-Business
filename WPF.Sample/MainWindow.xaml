@@ -39,17 +39,20 @@
 
             <MenuItem Header="Users"
                       IsEnabled="{Binding UserEntity.IsLoggedIn}"
+                      Visibility="{Binding Path=UserEntity.HaveValidConnection,Converter={StaticResource visibilityConverter}}"
                       Tag="WPF.Sample.UserControls.UserMaintenanceControl"
                       Click="MenuItem_Click" />
 
             <MenuItem Header="Feedback"
                       IsEnabled="{Binding UserEntity.IsLoggedIn}"
+                      Visibility="{Binding Path=UserEntity.HaveValidConnection,Converter={StaticResource visibilityConverter}}"
                       Tag="WPF.Sample.UserControls.UserFeedbackControl"
                       Click="MenuItem_Click" />
 
             <MenuItem Header="{Binding Path=LoginMenuHeader}"
                 HorizontalAlignment="Right"
                      Tag="login"
+                      Visibility="{Binding Path=UserEntity.HaveValidConnection,Converter={StaticResource visibilityConverter}}"
                 Click="MenuItem_Click" />
         </Menu>
 

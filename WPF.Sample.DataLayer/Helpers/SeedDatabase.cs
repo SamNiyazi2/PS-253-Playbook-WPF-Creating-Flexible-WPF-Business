@@ -11,15 +11,25 @@ namespace WPF.Sample.DataLayer.Helpers
     public static class DatabaseHelpers
     {
 
-        public static void seedDatabase()
-        {
-            SampleDbContext db = new SampleDbContext();
-            if (!db.Users.Any())
-            {
-                User user = new User { FirstName = "John", LastName = "Doe", EmailAddress = "johnd@mail.com", UserName = "JohnD", Password = "Pa$$w)RD#" };
-                db.Users.Add(user);
-                db.SaveChanges();
-            }
+        // 04/14/2022 07:29 am - SSN - Return task to catch error
+        // public static void seedDatabase()
+        public static async Task<Task> seedDatabase()
+        { 
+
+            return Task.Factory.StartNew(() =>
+                 {
+                    // throw new Exception("TEsting-20220414-0912");
+
+                     SampleDbContext db = new SampleDbContext();
+                     if (!db.Users.Any())
+                     {
+                         User user = new User { FirstName = "John", LastName = "Doe", EmailAddress = "johnd@mail.com", UserName = "JohnD", Password = "Pa$$w)RD#" };
+                         db.Users.Add(user);
+                         db.SaveChanges();
+                     }
+
+                 });
+             
         }
     }
 }

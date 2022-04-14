@@ -94,5 +94,19 @@ namespace WPF.Sample.DataLayer
                 RaisePropertyChanged("IsLoggedIn");
             }
         }
+
+        // 04/14/2022 07:53 am - SSN 
+        private bool _haveValidConnection;
+
+        [NotMapped]
+        public bool HaveValidConnection
+        {
+            get { return _haveValidConnection; }
+            set
+            {
+                _haveValidConnection = value;
+                RaisePropertyChanged("HaveValidConnection");
+            }
+        }
     }
 }
