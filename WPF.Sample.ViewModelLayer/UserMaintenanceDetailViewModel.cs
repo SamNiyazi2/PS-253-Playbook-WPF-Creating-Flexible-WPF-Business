@@ -63,6 +63,12 @@ namespace WPF.Sample.ViewModelLayer
 
             Clone<User>(_OriginalEntity, Entity);
 
+
+            // 03/30/2022 12:10 PM - ssn
+            // tODO
+            _OriginalEntity = new User();
+
+
         }
 
         public override bool Save()
