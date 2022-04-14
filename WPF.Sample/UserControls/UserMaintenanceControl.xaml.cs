@@ -34,31 +34,54 @@ namespace WPF.Sample.UserControls
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
+            APP_INSIGHTS.ai.TrackEvent("User maintenance - Close");
             _viewModel.Close();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            _viewModel.LoadUsers();
+            try
+            {
+                APP_INSIGHTS.ai.TrackEvent("User maintenance - Load users");
+                _viewModel.LoadUsers();
+            }
+            catch (Exception ex)
+            {
+                APP_INSIGHTS.ai.TrackException("User maintenance - Load users failed", ex);
+                throw;
+            }
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
+            APP_INSIGHTS.ai.TrackEvent("User maintenance - Begin add");
             _viewModel.BeginEdit(true);
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
+            APP_INSIGHTS.ai.TrackEvent("User maintenance - Begin edit");
             _viewModel.BeginEdit(false);
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            listControl.DeleteUser();
+            try
+            {
+                APP_INSIGHTS.ai.TrackEvent("User maintenance - Delete");
+                listControl.DeleteUser();
+            }
+            catch (Exception ex)
+            {
+                APP_INSIGHTS.ai.TrackException("User maintenance - Delete failed", ex);
+
+                throw;
+            }
         }
 
         private void UndoButton_Click(object sender, RoutedEventArgs e)
         {
+            APP_INSIGHTS.ai.TrackEvent("User maintenance - Undo");
             _viewModel.CancelEdit();
         }
 
@@ -84,8 +107,19 @@ namespace WPF.Sample.UserControls
         }
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            GetControlsList(detailControl);
-            _viewModel.Save();
+            try
+            {
+
+                APP_INSIGHTS.ai.TrackEvent("User maintenance - Save");
+                GetControlsList(detailControl);
+                _viewModel.Save();
+            }
+            catch (Exception ex)
+            {
+                APP_INSIGHTS.ai.TrackException("User maintenance - Save failed", ex);
+
+                throw;
+            }
         }
     }
 }

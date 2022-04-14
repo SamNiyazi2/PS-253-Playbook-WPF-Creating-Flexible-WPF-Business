@@ -78,10 +78,12 @@ namespace WPF.Sample
 
                 if (cmd.Contains("."))
                 {
+                    APP_INSIGHTS.ai.TrackEvent(cmd);
                     LoadUserControl(cmd);
                 }
                 else
                 {
+                    APP_INSIGHTS.ai.TrackEvent(cmd);
                     ProcessMenuCommands(cmd);
                 }
             }

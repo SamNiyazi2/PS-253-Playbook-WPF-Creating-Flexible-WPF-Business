@@ -76,6 +76,7 @@ namespace WPF.Sample.ViewModelLayer
             }
             catch (Exception ex)
             {
+                APP_INSIGHTS.ai.TrackException("Login - Failed", ex);
 
                 PublishException(ex);
             }

@@ -60,12 +60,25 @@ namespace WPF.Sample.UserControls
 
         private void UndoButton_Click(object sender, RoutedEventArgs e)
         {
+            APP_INSIGHTS.ai.TrackEvent("User maintenance - Undo");
+
             _viewModel.CancelEdit();
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.Save();
+            try
+            {
+                APP_INSIGHTS.ai.TrackEvent("User maintenance - Save");
+                _viewModel.Save();
+
+            }
+            catch (Exception ex)
+            {
+                APP_INSIGHTS.ai.TrackException("User maintenance - Save failed", ex);
+
+                throw;
+            }
         }
     }
 }

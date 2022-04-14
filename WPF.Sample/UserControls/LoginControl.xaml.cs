@@ -36,13 +36,26 @@ namespace WPF.Sample.UserControls
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.Entity.Password = txtPassword.Password;
+            try
+            {
+                APP_INSIGHTS.ai.TrackEvent("User maintenance - Login");
 
-            _viewModel.Login();
+                _viewModel.Entity.Password = txtPassword.Password;
+
+                _viewModel.Login();
+            }
+            catch (Exception ex)
+            {
+                APP_INSIGHTS.ai.TrackException("User maintenance - Login failed", ex);
+
+                throw;
+            }
+
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
+        { 
+            APP_INSIGHTS.ai.TrackEvent("User maintenance - Login cancel");
             _viewModel.Close();
         }
 

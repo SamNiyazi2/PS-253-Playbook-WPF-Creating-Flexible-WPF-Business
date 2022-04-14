@@ -37,13 +37,26 @@ namespace WPF.Sample.UserControls
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
+            APP_INSIGHTS.ai.TrackEvent("User feedback - Close");
+
             _viewModel.Close();
         }
 
 
         private void SendFeedbackButton_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.SendFeedback();
+            try
+            {
+                APP_INSIGHTS.ai.TrackEvent("Send feedback");
+                _viewModel.SendFeedback();
+
+            }
+            catch (Exception ex)
+            {
+                APP_INSIGHTS.ai.TrackException("Send feedback - failed", ex);
+
+                throw;
+            }
         }
 
 

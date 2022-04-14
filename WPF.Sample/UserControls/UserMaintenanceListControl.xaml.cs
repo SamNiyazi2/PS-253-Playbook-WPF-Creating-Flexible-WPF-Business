@@ -36,6 +36,8 @@ namespace WPF.Sample.UserControls
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
+            APP_INSIGHTS.ai.TrackEvent("User maintenance - Begin edit");
+
             getBoundRecord(sender);
             _viewModel.BeginEdit(false);
         }
@@ -48,8 +50,19 @@ namespace WPF.Sample.UserControls
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            getBoundRecord(sender);
-            DeleteUser();
+            try
+            {
+                APP_INSIGHTS.ai.TrackEvent("User maintenance - Delete");
+                getBoundRecord(sender);
+                DeleteUser();
+
+            }
+            catch (Exception ex)
+            {
+                APP_INSIGHTS.ai.TrackException("User maintenance - Delete failed", ex);
+
+                throw;
+            }
         }
 
         public void DeleteUser()
@@ -58,6 +71,7 @@ namespace WPF.Sample.UserControls
             if (MessageBox.Show("Do you have access to the database?" + Environment.NewLine +
                 "You cannot set passwords", "Confirm access to database", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes)
             {
+                APP_INSIGHTS.ai.TrackEvent("User maintenance - User deleting own record. ");
                 return;
             }
 
@@ -69,6 +83,7 @@ namespace WPF.Sample.UserControls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            APP_INSIGHTS.ai.TrackEvent("User maintenance - Unload control");
             _viewModel = (UserMaintenanceViewModel)this.DataContext;
         }
     }
