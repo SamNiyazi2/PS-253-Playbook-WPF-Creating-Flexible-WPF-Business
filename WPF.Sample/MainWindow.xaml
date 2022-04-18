@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:WPF.Sample.ViewModelLayer;assembly=WPF.Sample.ViewModelLayer"
         mc:Ignorable="d"
-        Title="Playbook WPF: Creating Flexible WPF Business Application Screens"
+        Title="PS-253 - Playbook WPF: Creating Flexible WPF Business Application Screens"
         WindowStartupLocation="CenterScreen"
-        Loaded="Window_Loaded">
+        Loaded="Window_Loaded" Width="640" Height="600">
 
     <Window.Resources>
         <vm:MainWindowViewModel x:Key="viewModel"
@@ -16,7 +16,7 @@
                                 InfoMessageTimeout="1500"/>
     </Window.Resources>
     <Grid Background="{StaticResource gridBackgroundColor}"
-        DataContext="{StaticResource viewModel}">
+        DataContext="{StaticResource viewModel}"  >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -39,17 +39,20 @@
 
             <MenuItem Header="Users"
                       IsEnabled="{Binding UserEntity.IsLoggedIn}"
+                      Visibility="{Binding Path=UserEntity.HaveValidConnection,Converter={StaticResource visibilityConverter}}"
                       Tag="WPF.Sample.UserControls.UserMaintenanceControl"
                       Click="MenuItem_Click" />
 
             <MenuItem Header="Feedback"
                       IsEnabled="{Binding UserEntity.IsLoggedIn}"
+                      Visibility="{Binding Path=UserEntity.HaveValidConnection,Converter={StaticResource visibilityConverter}}"
                       Tag="WPF.Sample.UserControls.UserFeedbackControl"
                       Click="MenuItem_Click" />
 
             <MenuItem Header="{Binding Path=LoginMenuHeader}"
                 HorizontalAlignment="Right"
                      Tag="login"
+                      Visibility="{Binding Path=UserEntity.HaveValidConnection,Converter={StaticResource visibilityConverter}}"
                 Click="MenuItem_Click" />
         </Menu>
 
@@ -62,9 +65,9 @@
                 Style="{StaticResource infoMessageArea}">
 
             <StackPanel>
-                <TextBlock FontSize="40"
-                           Text="{Binding Path=InfoMessageTitle}"/>
                 <TextBlock FontSize="24"
+                           Text="{Binding Path=InfoMessageTitle}"/>
+                <TextBlock FontSize="16"
                            Text="{Binding Path=InfoMessage}"/>
 
             </StackPanel>

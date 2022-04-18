@@ -1,20 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
- 
+
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WPF.Sample.ViewModelLayer;
+using Common.Library;
 
 namespace WPF.Sample.UserControls
 {
@@ -36,31 +26,32 @@ namespace WPF.Sample.UserControls
 
             _viewModel = (UserMaintenanceViewModel)this.DataContext;
             IsEnabledChanged += UserMaintenanceDetailControl_IsEnabledChanged;
-            
+
 
         }
         Timer timer;
-    
+
 
         private void UserMaintenanceDetailControl_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            timer = new Timer( new TimerCallback( setFocus2));
+            timer = new Timer(new TimerCallback(setFocus2));
             timer.Change(600, 0);
         }
 
-        
+
         private void setFocus2(object state)
         {
-            Application.Current.Dispatcher.Invoke((Action)delegate {
+            Application.Current.Dispatcher.Invoke((Action)delegate
+            {
                 username.Focus();
             });
         }
 
-      
+
 
         private void UndoButton_Click(object sender, RoutedEventArgs e)
         {
-            APP_INSIGHTS.ai.TrackEvent("User maintenance - Undo");
+            APP_INSIGHTS.ai.TrackEvent("ps-253-20220415-0701: User maintenance - Undo");
 
             _viewModel.CancelEdit();
         }
@@ -69,13 +60,13 @@ namespace WPF.Sample.UserControls
         {
             try
             {
-                APP_INSIGHTS.ai.TrackEvent("User maintenance - Save");
+                APP_INSIGHTS.ai.TrackEvent("ps-253-20220415-0658: User maintenance - Save");
                 _viewModel.Save();
 
             }
             catch (Exception ex)
             {
-                APP_INSIGHTS.ai.TrackException("User maintenance - Save failed", ex);
+                APP_INSIGHTS.ai.TrackException("ps-253-20220415-0657: User maintenance - Save failed", ex);
 
                 throw;
             }

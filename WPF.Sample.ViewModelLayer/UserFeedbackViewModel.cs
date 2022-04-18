@@ -50,6 +50,8 @@ namespace WPF.Sample.ViewModelLayer
                 ValidationMessages = new ObservableCollection<ValidationMessage>(db.CreateValidationMessages(ex));
                 IsValidationVisible = true;
 
+                APP_INSIGHTS.ai.TrackException("ps-253-20220416-0021 - User feedback - Save failed Db validation", ex);
+ 
             }
             catch (Exception ex)
             {

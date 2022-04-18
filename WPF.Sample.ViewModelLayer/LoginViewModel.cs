@@ -21,7 +21,7 @@ namespace WPF.Sample.ViewModelLayer
             // Entity = new User {UserName = Environment.UserName };
 
             SampleDbContext db = new SampleDbContext();
-            Entity = db.Users.OrderBy(r=>r.UserId).FirstOrDefault();
+            Entity = db.Users.OrderBy(r => r.UserId).FirstOrDefault();
 
         }
 
@@ -90,7 +90,7 @@ namespace WPF.Sample.ViewModelLayer
             }
             catch (Exception ex)
             {
-                APP_INSIGHTS.ai.TrackException("Login - Failed", ex);
+                APP_INSIGHTS.ai.TrackException("ps-253-20220415-0650: Login - Failed", ex);
 
                 PublishException(ex);
             }

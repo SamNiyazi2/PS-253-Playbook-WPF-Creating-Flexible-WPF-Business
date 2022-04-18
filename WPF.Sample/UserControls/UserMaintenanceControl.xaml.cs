@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WPF.Sample.ViewModelLayer;
+ 
+using Common.Library; 
 
 // 09/23/2020 04:23 am - SSN - [20200923-0404] - [004] - M04-04-Demo-Create-use-feedback-view-model (and UserMaintenance)
 
@@ -34,7 +26,7 @@ namespace WPF.Sample.UserControls
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            APP_INSIGHTS.ai.TrackEvent("User maintenance - Close");
+            APP_INSIGHTS.ai.TrackEvent("ps-253-20220415-0712: User maintenance - Close");
             _viewModel.Close();
         }
 
@@ -42,25 +34,25 @@ namespace WPF.Sample.UserControls
         {
             try
             {
-                APP_INSIGHTS.ai.TrackEvent("User maintenance - Load users");
+                APP_INSIGHTS.ai.TrackEvent("ps-253-20220415-0711: User maintenance - Load users");
                 _viewModel.LoadUsers();
             }
             catch (Exception ex)
             {
-                APP_INSIGHTS.ai.TrackException("User maintenance - Load users failed", ex);
+                APP_INSIGHTS.ai.TrackException("ps-253-20220415-0710: User maintenance - Load users failed", ex);
                 throw;
             }
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            APP_INSIGHTS.ai.TrackEvent("User maintenance - Begin add");
+            APP_INSIGHTS.ai.TrackEvent("ps-253-20220415-0709: User maintenance - Begin add");
             _viewModel.BeginEdit(true);
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            APP_INSIGHTS.ai.TrackEvent("User maintenance - Begin edit");
+            APP_INSIGHTS.ai.TrackEvent("ps-253-20220415-0708: User maintenance - Begin edit");
             _viewModel.BeginEdit(false);
         }
 
@@ -68,12 +60,12 @@ namespace WPF.Sample.UserControls
         {
             try
             {
-                APP_INSIGHTS.ai.TrackEvent("User maintenance - Delete");
+                APP_INSIGHTS.ai.TrackEvent("ps-253-20220415-0706: User maintenance - Delete");
                 listControl.DeleteUser();
             }
             catch (Exception ex)
             {
-                APP_INSIGHTS.ai.TrackException("User maintenance - Delete failed", ex);
+                APP_INSIGHTS.ai.TrackException("ps-253-20220415-0705: User maintenance - Delete failed", ex);
 
                 throw;
             }
@@ -81,7 +73,7 @@ namespace WPF.Sample.UserControls
 
         private void UndoButton_Click(object sender, RoutedEventArgs e)
         {
-            APP_INSIGHTS.ai.TrackEvent("User maintenance - Undo");
+            APP_INSIGHTS.ai.TrackEvent("ps-253-20220415-0704: User maintenance - Undo");
             _viewModel.CancelEdit();
         }
 
@@ -110,13 +102,13 @@ namespace WPF.Sample.UserControls
             try
             {
 
-                APP_INSIGHTS.ai.TrackEvent("User maintenance - Save");
+                APP_INSIGHTS.ai.TrackEvent("ps-253-20220415-0703: User maintenance - Save");
                 GetControlsList(detailControl);
                 _viewModel.Save();
             }
             catch (Exception ex)
             {
-                APP_INSIGHTS.ai.TrackException("User maintenance - Save failed", ex);
+                APP_INSIGHTS.ai.TrackException("ps-253-20220415-0702: User maintenance - Save failed", ex);
 
                 throw;
             }

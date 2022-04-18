@@ -111,6 +111,9 @@ namespace WPF.Sample.ViewModelLayer
             {
                 ValidationMessages = new ObservableCollection<ValidationMessage>(db.CreateValidationMessages(ex));
                 IsValidationVisible = true;
+
+                APP_INSIGHTS.ai.TrackException("ps-253-20220416-0019 - User maintenance - Save failed Db validation", ex);
+
             }
             catch (Exception ex)
             {
@@ -167,6 +170,8 @@ namespace WPF.Sample.ViewModelLayer
             {
                 ValidationMessages = new ObservableCollection<ValidationMessage>(db.CreateValidationMessages(ex));
                 IsValidationVisible = true;
+                APP_INSIGHTS.ai.TrackException("ps-253-2022041-0018: User maintenance - DB validation error", ex);
+
             }
             catch (Exception ex)
             {

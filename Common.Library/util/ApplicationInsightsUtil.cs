@@ -12,7 +12,9 @@ using System.Threading.Tasks;
 // 04/14/2022 10:32 am - SSN 
 // https://docs.microsoft.com/en-us/azure/azure-monitor/app/windows-desktop
 
-namespace WPF.Sample.ViewModelLayer
+// 04/16/2022 12:04 am - SSN - Moved from WPF.Common
+// namespace WPF.Common
+namespace Common.Library
 {
 
     public static class APP_INSIGHTS
@@ -105,7 +107,7 @@ namespace WPF.Sample.ViewModelLayer
                 et.Properties.Add(e);
             }
 
-            tc.TrackException(ex);
+            tc.TrackException(et);
 
         }
 
