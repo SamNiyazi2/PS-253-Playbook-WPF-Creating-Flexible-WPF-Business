@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WPF.Sample.DataLayer;
 using WPF.Sample.ViewModelLayer;
+using Common.Library;
+using ssn_application_insights;
 
 namespace WPF.Sample.UserControls
 {
@@ -36,6 +27,8 @@ namespace WPF.Sample.UserControls
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
+            APP_INSIGHTS.ai.TrackEvent("ps-253-20220415-0656: User maintenance - Begin edit");
+
             getBoundRecord(sender);
             _viewModel.BeginEdit(false);
         }
@@ -48,18 +41,46 @@ namespace WPF.Sample.UserControls
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            getBoundRecord(sender);
-            DeleteUser();
+            try
+            {
+                APP_INSIGHTS.ai.TrackEvent("ps-253-20220415-0655: User maintenance - Delete");
+                getBoundRecord(sender);
+                DeleteUser();
+
+            }
+            catch (Exception ex)
+            {
+                APP_INSIGHTS.ai.TrackException("ps-253-20220415-0654: User maintenance - Delete failed", ex);
+
+                throw;
+            }
         }
 
         public void DeleteUser()
         {
-
-            if (MessageBox.Show("Do you have access to the database?" + Environment.NewLine +
-                "You cannot set passwords", "Confirm access to database", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes)
+            foreach (Window win in Application.Current.Windows)
             {
-                return;
+                if (win.GetType() == typeof(MainWindow))
+                {
+                    MainWindow mw = (MainWindow)win;
+                    if (mw.LoggedInUser.UserId == _viewModel.Entity.UserId)
+                    {
+
+                        MessageBox.Show("You can't delete your own record!" + Environment.NewLine +
+                                        "Invalid Action", "Invalid Action", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
             }
+
+
+            // 04/20/2022 10:10 am - SSN - Take out. Fixed.
+            //if (MessageBox.Show("Do you have access to the database?" + Environment.NewLine +
+            //    "You cannot set passwords", "Confirm access to database", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes)
+            //{
+            //    APP_INSIGHTS.ai.TrackEvent("ps-253-20220415-0653: User maintenance - User deleting own record. ");
+            //    return;
+            //}
 
             if (MessageBox.Show("Delete user " + _viewModel.Entity.LastName + ", " + _viewModel.Entity.FirstName + "?", "Confirm Deletion", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
@@ -69,6 +90,7 @@ namespace WPF.Sample.UserControls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            APP_INSIGHTS.ai.TrackEvent("ps-253-20220415-0652: User maintenance - Unload control");
             _viewModel = (UserMaintenanceViewModel)this.DataContext;
         }
     }

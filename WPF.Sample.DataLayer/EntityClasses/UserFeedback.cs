@@ -45,6 +45,7 @@ namespace WPF.Sample.DataLayer
         private string _EmailAddress;
 
         [Required(ErrorMessage = "Email address is required")]
+        [EmailAddress]
         public string EmailAddress
         {
             get { return _EmailAddress; }
@@ -73,7 +74,8 @@ namespace WPF.Sample.DataLayer
 
         private string _Message;
 
-        [Required(ErrorMessage = "Input is required")]
+        [Required(ErrorMessage = "Your didn't provide your feedback!")]
+        [MaxLength(ErrorMessage = "Please keep it less than 2000 letters.")]
         public string Message
         {
             get { return _Message; }

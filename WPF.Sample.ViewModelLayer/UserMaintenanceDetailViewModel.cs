@@ -1,4 +1,5 @@
 ﻿using Common.Library;
+using ssn_application_insights;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -63,6 +64,12 @@ namespace WPF.Sample.ViewModelLayer
 
             Clone<User>(_OriginalEntity, Entity);
 
+
+            // 03/30/2022 12:10 PM - ssn
+            // tODO
+            _OriginalEntity = new User();
+
+
         }
 
         public override bool Save()
@@ -79,7 +86,8 @@ namespace WPF.Sample.ViewModelLayer
 
                 if (IsAddMode)
                 {
-                    Entity.Password = StringHelper.CreateRandomString(16);
+                    // 04/19/2022 02:35 pm - SSN - Remove
+                    // Entity.Password = StringHelper.CreateRandomString(16);
                     db.Users.Add(Entity);
                 }
                 else
@@ -105,6 +113,9 @@ namespace WPF.Sample.ViewModelLayer
             {
                 ValidationMessages = new ObservableCollection<ValidationMessage>(db.CreateValidationMessages(ex));
                 IsValidationVisible = true;
+
+                APP_INSIGHTS.ai.TrackException("ps-253-20220416-0019 - User maintenance - Save failed Db validation", ex);
+
             }
             catch (Exception ex)
             {
@@ -161,6 +172,8 @@ namespace WPF.Sample.ViewModelLayer
             {
                 ValidationMessages = new ObservableCollection<ValidationMessage>(db.CreateValidationMessages(ex));
                 IsValidationVisible = true;
+                APP_INSIGHTS.ai.TrackException("ps-253-2022041-0018: User maintenance - DB validation error", ex);
+
             }
             catch (Exception ex)
             {

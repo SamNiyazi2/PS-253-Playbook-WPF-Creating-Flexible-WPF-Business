@@ -1,0 +1,17 @@
+﻿
+used : 253 - PS - Playbook WPF: Creating Flexible WPF Business
+https://devsitesindex20190127.azurewebsites.net/devsites/details?id=253
+
+04/03/2022 03:22 am - SSN 
+04/13/2022 07:12 am - SSN - Updated
+
+
+Publish to:
+	C:\ssn_published_apps\web\ps-253\
+
+Deploy using PowerShell script:  
+	C:\Sams\PS\azure\Storage_Blob\upload-to-static-web-app.ps1
+
+
+ Deploys to static web site
+ https://ps312storagetabe20210515.z19.web.core.windows.net/

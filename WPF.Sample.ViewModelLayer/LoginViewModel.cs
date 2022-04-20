@@ -3,8 +3,10 @@
 // 09/23/2020 02:21 am - SSN - [20200923-0216] - [001] - M03-06 - Create the login view model class 
 
 using Common.Library;
+using ssn_application_insights;
 using System;
 using System.Linq;
+using WPF.Common;
 using WPF.Sample.DataLayer;
 
 namespace WPF.Sample.ViewModelLayer
@@ -15,10 +17,12 @@ namespace WPF.Sample.ViewModelLayer
         public LoginViewModel()
         {
             DisplayStatusMessage("Login to application");
-            Entity = new User
-            {
-                UserName = Environment.UserName 
-            };
+
+            // 03/30/2022 05:39 pm - SSN
+            // Entity = new User {UserName = Environment.UserName };
+
+            SampleDbContext db = new SampleDbContext();
+            Entity = db.Users.OrderBy(r => r.UserId).FirstOrDefault();
 
         }
 
@@ -68,14 +72,26 @@ namespace WPF.Sample.ViewModelLayer
             {
                 db = new SampleDbContext();
 
-                isValid = db.Users.Where(u => u.UserName == Entity.UserName && u.Password== Entity.Password).Count() > 0;
-                if (!isValid)
+                // 03/30/2022 08:27 am - SSN
+                // isValid = db.Users.Where(u => u.UserName == Entity.UserName && u.Password== Entity.Password).Count() > 0;
+
+                User tempEntity = db.Users.Where(u => u.UserName == Entity.UserName && u.Password == Entity.Password).FirstOrDefault();
+
+                //if (!isValid)
+                if (tempEntity == null)
                 {
                     AddValidationMessage("LoginFailed", "Invalid user name or password");
+                }
+                else
+                {
+                    isValid = true;
+                    Entity = tempEntity;
+                    Entity.Password = "";
                 }
             }
             catch (Exception ex)
             {
+                APP_INSIGHTS.ai.TrackException("ps-253-20220415-0650: Login - Failed", ex);
 
                 PublishException(ex);
             }

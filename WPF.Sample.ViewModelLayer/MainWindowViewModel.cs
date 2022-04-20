@@ -25,6 +25,7 @@ namespace WPF.Sample.ViewModelLayer
         // 09/22/2020 02:48 pm - SSN - [20200922-1448] - [001] - M02-05 - Create properties for information messages 
         private bool _IsInfoMessageVisible = true;
         private string _InfoMessage = string.Empty;
+        private string _InfoMessage_2 = string.Empty;
         private string _InfoMessageTitle = string.Empty;
 
 
@@ -102,6 +103,17 @@ namespace WPF.Sample.ViewModelLayer
         }
 
 
+        public string InfoMessage_2
+        {
+            get { return _InfoMessage_2; }
+            set
+            {
+                _InfoMessage_2 = value;
+                RaisePropertyChanged("InfoMessage_2");
+
+            }
+        }
+
 
         public string InfoMessageTitle
         {
@@ -114,7 +126,18 @@ namespace WPF.Sample.ViewModelLayer
             }
         }
 
-
+        // 04/14/2022 07:53 am - SSN 
+        private bool _haveValidConnection;
+         
+        public bool HaveValidConnection
+        {
+            get { return _haveValidConnection; }
+            set
+            {
+                _haveValidConnection = value;
+                RaisePropertyChanged("HaveValidConnection");
+            }
+        }
 
 
 
@@ -142,6 +165,7 @@ namespace WPF.Sample.ViewModelLayer
         public void ClearInfoMessages()
         {
             InfoMessage = string.Empty;
+            InfoMessage_2 = string.Empty;
             InfoMessageTitle = string.Empty;
             IsInfoMessageVisible = false;
         }

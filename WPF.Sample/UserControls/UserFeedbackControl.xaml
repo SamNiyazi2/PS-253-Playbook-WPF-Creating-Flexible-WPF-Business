@@ -14,7 +14,8 @@
         <vm:UserFeedbackViewModel x:Key="viewModel"/>
         <Style TargetType="Label"
            x:Key="feedbackLabels">
-            <Setter Property="Margin" Value="0,4"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="16,5,0,0"/>
         </Style>
     </UserControl.Resources>
 
@@ -82,19 +83,19 @@
                            Style="{StaticResource feedbackLabels}"
                            Content="Name"/>
                     <TextBox Grid.Row="1"
-                             Text="{Binding Path=Entity.Name}"/>
+                             Text="{Binding Path=Entity.Name}"  MaxLength="100"/>
 
                     <Label Grid.Row="2"
                            Style="{StaticResource feedbackLabels}"
                            Content="Email Address"/>
                     <TextBox Grid.Row="3"
-                             Text="{Binding Path=Entity.EmailAddress}"/>
+                             Text="{Binding Path=Entity.EmailAddress}"  MaxLength="200" />
 
                     <Label Grid.Row="4"
                            Style="{StaticResource feedbackLabels}"
                            Content="Phone Extension"/>
                     <TextBox Grid.Row="5"
-                             Text="{Binding Path=Entity.PhoneExtension}"/>
+                             Text="{Binding Path=Entity.PhoneExtension}" MaxLength="50" />
 
                     <Label Grid.Row="6"
                            Style="{StaticResource feedbackLabels}"
@@ -103,7 +104,8 @@
                              Text="{Binding Path=Entity.Message}"
                              AcceptsReturn="true"
                              TextWrapping="Wrap"
-                             Height="150"/>
+                             Height="150"
+                             MaxLength="2000" />
 
 
                     <StackPanel Grid.Row="8"
