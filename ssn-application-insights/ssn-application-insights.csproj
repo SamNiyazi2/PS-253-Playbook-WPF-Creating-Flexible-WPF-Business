@@ -4,15 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{75BCEAB1-0A02-4676-BCB4-2A61E3ACB641}</ProjectGuid>
+    <ProjectGuid>{4A8F55D0-2687-49DE-AB15-D95862B07A18}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Common.Library</RootNamespace>
-    <AssemblyName>Common.Library</AssemblyName>
+    <RootNamespace>ssn_application_insights</RootNamespace>
+    <AssemblyName>ssn-application-insights</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,7 +38,6 @@
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.5.0.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
@@ -62,30 +60,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\ConfigurationSettings.cs" />
-    <Compile Include="Exceptions\ExceptionManager.cs" />
-    <Compile Include="StringHelper.cs" />
-    <Compile Include="Validation\ValidationMessage.cs" />
-    <Compile Include="CommonBase.cs" />
-    <Compile Include="MessageBroker\MessageBrokerMessages.cs" />
-    <Compile Include="MessageBroker\MessageBroker.cs" />
-    <Compile Include="MessageBroker\MessageBrokerEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\ViewModelAddEditDeleteBase.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Readme.txt" />
+    <Compile Include="util\ApplicationInsightsUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ssn-application-insights\ssn-application-insights.csproj">
-      <Project>{4a8f55d0-2687-49de-ab15-d95862b07a18}</Project>
-      <Name>ssn-application-insights</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

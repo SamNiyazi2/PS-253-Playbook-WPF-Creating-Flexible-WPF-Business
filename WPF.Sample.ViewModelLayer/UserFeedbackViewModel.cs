@@ -1,4 +1,5 @@
 ﻿using Common.Library;
+using ssn_application_insights;
 using System;
 using System.Collections.ObjectModel;
 using System.Data.Entity.Validation;

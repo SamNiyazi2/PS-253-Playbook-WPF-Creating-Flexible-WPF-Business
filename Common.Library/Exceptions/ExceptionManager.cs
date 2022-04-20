@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ssn_application_insights;
+using System;
 
 namespace Common.Library
 {

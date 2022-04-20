@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using Common.Library;
+using ssn_application_insights;
 using WPF.Sample.ViewModelLayer;
 
 // 09/23/2020 04:11 am - SSN - [20200923-0404] - [002] - M04-04-Demo-Create-use-feedback-view-model

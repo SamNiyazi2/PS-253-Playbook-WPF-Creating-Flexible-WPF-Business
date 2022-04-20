@@ -39,20 +39,20 @@
 
             <MenuItem Header="Users"
                       IsEnabled="{Binding UserEntity.IsLoggedIn}"
-                      Visibility="{Binding Path=UserEntity.HaveValidConnection,Converter={StaticResource visibilityConverter}}"
+                      Visibility="{Binding Path=HaveValidConnection,Converter={StaticResource visibilityConverter}}"
                       Tag="WPF.Sample.UserControls.UserMaintenanceControl"
                       Click="MenuItem_Click" />
 
             <MenuItem Header="Feedback"
                       IsEnabled="{Binding UserEntity.IsLoggedIn}"
-                      Visibility="{Binding Path=UserEntity.HaveValidConnection,Converter={StaticResource visibilityConverter}}"
+                      Visibility="{Binding Path=HaveValidConnection,Converter={StaticResource visibilityConverter}}"
                       Tag="WPF.Sample.UserControls.UserFeedbackControl"
                       Click="MenuItem_Click" />
 
             <MenuItem Header="{Binding Path=LoginMenuHeader}"
                 HorizontalAlignment="Right"
                      Tag="login"
-                      Visibility="{Binding Path=UserEntity.HaveValidConnection,Converter={StaticResource visibilityConverter}}"
+                      Visibility="{Binding Path=HaveValidConnection,Converter={StaticResource visibilityConverter}}"
                 Click="MenuItem_Click" />
         </Menu>
 
@@ -69,6 +69,8 @@
                            Text="{Binding Path=InfoMessageTitle}"/>
                 <TextBlock FontSize="16"
                            Text="{Binding Path=InfoMessage}"/>
+                <TextBlock FontSize="16"
+                           Text="{Binding Path=InfoMessage_2}"/>
 
             </StackPanel>
 

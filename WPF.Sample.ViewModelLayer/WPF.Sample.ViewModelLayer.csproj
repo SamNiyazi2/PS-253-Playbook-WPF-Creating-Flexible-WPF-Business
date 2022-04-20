@@ -40,6 +40,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\EntityFramework.6.2.0\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="ssn_AzureKeyVault, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\ssn_AzureKeyVault\WorkProject\bin\Debug\ssn_AzureKeyVault.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -79,6 +83,10 @@
     <ProjectReference Include="..\Common.Library\Common.Library.csproj">
       <Project>{75bceab1-0a02-4676-bcb4-2a61e3acb641}</Project>
       <Name>Common.Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ssn-application-insights\ssn-application-insights.csproj">
+      <Project>{4a8f55d0-2687-49de-ab15-d95862b07a18}</Project>
+      <Name>ssn-application-insights</Name>
     </ProjectReference>
     <ProjectReference Include="..\WPF.Common\WPF.Common.csproj">
       <Project>{E454AE6F-7BF9-4190-B906-CBBE517F2AD9}</Project>

@@ -1,4 +1,5 @@
 ﻿using Common.Library;
+using ssn_application_insights;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -85,7 +86,8 @@ namespace WPF.Sample.ViewModelLayer
 
                 if (IsAddMode)
                 {
-                    Entity.Password = StringHelper.CreateRandomString(16);
+                    // 04/19/2022 02:35 pm - SSN - Remove
+                    // Entity.Password = StringHelper.CreateRandomString(16);
                     db.Users.Add(Entity);
                 }
                 else

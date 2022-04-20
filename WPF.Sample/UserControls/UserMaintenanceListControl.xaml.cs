@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using WPF.Sample.DataLayer;
 using WPF.Sample.ViewModelLayer;
 using Common.Library;
-
+using ssn_application_insights;
 
 namespace WPF.Sample.UserControls
 {
@@ -74,12 +74,13 @@ namespace WPF.Sample.UserControls
             }
 
 
-            if (MessageBox.Show("Do you have access to the database?" + Environment.NewLine +
-                "You cannot set passwords", "Confirm access to database", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes)
-            {
-                APP_INSIGHTS.ai.TrackEvent("ps-253-20220415-0653: User maintenance - User deleting own record. ");
-                return;
-            }
+            // 04/20/2022 10:10 am - SSN - Take out. Fixed.
+            //if (MessageBox.Show("Do you have access to the database?" + Environment.NewLine +
+            //    "You cannot set passwords", "Confirm access to database", MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes)
+            //{
+            //    APP_INSIGHTS.ai.TrackEvent("ps-253-20220415-0653: User maintenance - User deleting own record. ");
+            //    return;
+            //}
 
             if (MessageBox.Show("Delete user " + _viewModel.Entity.LastName + ", " + _viewModel.Entity.FirstName + "?", "Confirm Deletion", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {

@@ -10,6 +10,7 @@ using WPF.Sample.UserControls;
 using WPF.Sample.ViewModelLayer;
 using WPF.Common;
 using System.Runtime.CompilerServices;
+using ssn_application_insights;
 
 namespace WPF.Sample
 {
@@ -53,11 +54,7 @@ namespace WPF.Sample
 
                 case MessageBrokerMessages.LOGIN_SUCCESS:
                     _viewModel.UserEntity = (User)e.MessagePayload;
-
-                    // 04/14/2022 09:10 am - SSN
-
-                    _viewModel.UserEntity.HaveValidConnection = App.HaveDatabaseConnection;
-
+                      
                     _viewModel.LoginMenuHeader = "Logout " + _viewModel.UserEntity.FirstName;
                     break;
 
@@ -206,9 +203,7 @@ namespace WPF.Sample
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
             await LoadApplication();
-
         }
 
 
@@ -216,88 +211,106 @@ namespace WPF.Sample
         public async Task LoadApplication()
         {
             _viewModel.InfoMessage = "Connecting to database...";
+
+
+            bool haveConnection = false;
+
             try
             {
 
-                bool haveConnection = false;
-
-                // 03/31/2022 12:48 am - SSN
-                // 04/14/2022 09:06 am - SSN - Revise to pickup connection string from Azure vault.
-                Task t1 = await DataLayer.Helpers.DatabaseHelpers.seedDatabaseAsync(sampleDbContext);
-
-                Task t2 = t1.ContinueWith(async t =>
-                    {
-                        await Dispatcher.BeginInvoke(new Action(() =>
-                        {
-
-                            _viewModel.InfoMessageTitle = "Failed to connect to database.  (202)";
-                            _viewModel.InfoMessage = "Click to close application";
 
 
-                            this.MouseDown += MainWindow_MouseDown_FailedConnection;
+                    // 03/31/2022 12:48 am - SSN
+                    // 04/14/2022 09:06 am - SSN - Revise to pickup connection string from Azure vault.
 
 
-                        }), DispatcherPriority.Background);
+                    _viewModel.InfoMessage_2 = "Connecting to database...";
 
-                        return t;
+                    await Dispatcher.BeginInvoke(new Action(() =>
+                             {
+                                 try
+                                 {
 
-                    }, TaskContinuationOptions.OnlyOnFaulted);
+                                     DataLayer.Helpers.DatabaseHelpers.seedDatabaseAsync(sampleDbContext);
 
-                Task t3 = t1.ContinueWith(t =>
-                     {
-                         TaskStatus status = t.Status;
+                                     haveConnection = true;
 
-                         string test = "Ran to completion.";
-                         haveConnection = true;
-                         return t;
+                                 }
+                                 catch (Exception ex)
+                                 {
 
-                     }, TaskContinuationOptions.OnlyOnRanToCompletion);
 
-                 
-                t1.Wait();
-                Task.WaitAny(t2, t3);
+                                     _viewModel.InfoMessageTitle = "Failed to connect to database.  (202)";
+                                     _viewModel.InfoMessage = "Click to close application";
+                                     _viewModel.InfoMessage_2 = "Error was noted.  Try again in a few minutes.";
+
+
+                                     this.MouseDown += MainWindow_MouseDown_FailedConnection;
+
+                                     APP_INSIGHTS.ai.TrackException("ps-253-20220419-1413 - Main Window - seedDatabaseAsync failure", ex);
+                                 }
+
+
+                             }), DispatcherPriority.Background); 
+     
 
 
 
-
-                if (!haveConnection) return;
-
-                _viewModel.InfoMessage = "Loading state codes...";
-                await Dispatcher.BeginInvoke(new Action(() =>
-                    {
-                        _viewModel.LoadStateCodes();
-
-                    }), DispatcherPriority.Background);
+                if (haveConnection)
+                {
 
 
-
-
-                _viewModel.InfoMessage = "Loading country codes...";
-                await Dispatcher.BeginInvoke(new Action(() =>
-                    {
-                        _viewModel.LoadCountryCodes();
-
-                    }), DispatcherPriority.Background);
-
-
-                _viewModel.InfoMessage = "Loading employee types...";
-                await Dispatcher.BeginInvoke(new Action(() =>
+                    _viewModel.InfoMessage_2 = "Connected database.";
+                    await Dispatcher.BeginInvoke(new Action(() =>
                     {
                         _viewModel.LoadEmployeeTypes();
 
                     }), DispatcherPriority.Background);
 
-                _viewModel.UserEntity.HaveValidConnection = true;
 
-                App.HaveDatabaseConnection = true;
+                    _viewModel.InfoMessage = "Loading state codes...";
+                    _viewModel.InfoMessage_2 = "";
+                    await Dispatcher.BeginInvoke(new Action(() =>
+                         {
+                             _viewModel.LoadStateCodes();
 
-                _viewModel.ClearInfoMessages();
+                         }), DispatcherPriority.Background);
+
+
+
+                    _viewModel.InfoMessage = "Loading country codes...";
+                    await Dispatcher.BeginInvoke(new Action(() =>
+                         {
+                             _viewModel.LoadCountryCodes(); 
+
+                         }), DispatcherPriority.Background);
+
+
+                    _viewModel.InfoMessage = "Loading employee types...";
+                    await Dispatcher.BeginInvoke(new Action(() =>
+                         {
+                             _viewModel.LoadEmployeeTypes();
+
+                         }), DispatcherPriority.Background);
+
+
+                    _viewModel.ClearInfoMessages();
+
+
+                    _viewModel.HaveValidConnection = true;
+                   
+
+                }
+
+
 
             }
             catch (Exception ex)
             {
+
                 _viewModel.InfoMessageTitle = "Failed to connect to database.  (101)";
                 _viewModel.InfoMessage = "Click to close application";
+                _viewModel.InfoMessage_2 = "";
 
                 APP_INSIGHTS.ai.TrackException("ps-253-20220416-0024 - Main Window - Load application failure", ex);
 
@@ -319,10 +332,17 @@ Error was logged and should be handled shortly.
                 }
 
 
+
             }
 
 
         }
+
+
+
+
+
+
 
         /// 04/14/2022 08:06 am - SSN
         private void MainWindow_MouseDown_FailedConnection(object sender, System.Windows.Input.MouseButtonEventArgs e)

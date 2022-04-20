@@ -11,6 +11,9 @@ using WPF.Common;
 using System.Configuration;
 using System.Data.Common;
 using System.Data.SqlClient;
+using ssn_AzureKeyVault.SqlAzure;
+using ssn_application_insights;
+using System.Runtime.CompilerServices;
 
 namespace WPF.Sample.DataLayer
 {
@@ -19,66 +22,142 @@ namespace WPF.Sample.DataLayer
         // 04/13/2022 07:20 am - SSN - Check connectionstring
         #region Override connectionString
         // public SampleDbContext() : base("name=Samples")
-        public SampleDbContext() : base(getConnectionStringAsync()) { }
 
-        private static string getConnectionStringAsync()
+        string accessToken_db;
+
+        public SampleDbContext() : base(getConnectionString(), true) { }
+
+        private static SqlConnection getConnectionString()
         {
             string connectionString = "";
+            //string accessToken = "";
 
             object connectionString_obj = ConfigurationManager.ConnectionStrings["Samples"];
-            // SqlConnection conn = new SqlConnection(connectionString);
-            // DbConnection conn2 = new SqlConnection(connectionString);
-            //conn.AccessToken
+            ConfigSettings configSettings = ssn_AzureKeyVault.Configurations.ConfigurationReader.get<ConfigSettings>();
+
 
             if (connectionString_obj != null)
             {
                 connectionString = connectionString_obj.ToString();
             }
 
-            if (connectionString.ToLower() != "azure")
+
+            if (!connectionString.ToLower().StartsWith("azure"))
             {
-                return connectionString;
+                SqlConnection conn2 = new SqlConnection(connectionString);
+                
+
+
+                return conn2;
             }
+
+
+            if (connectionString.ToLower() == "azure_me")
+            {
+                Task<SqlConnection> t = Task<SqlConnection>.Run(async () =>
+                {
+
+                    RestAccess restAccess = new RestAccess();
+
+                    // Failed after passing
+                    //ssn_MicrosoftToken temp1 = await restAccess.getTokenAsync_v2();
+                    //ssn_AzureVaultRecord temp2 = await restAccess.getSecretAsync_v3("ssn-key-test-20210224-001");
+                    // See error posted in method.
+                    //ssn_AzureVaultRecord _ssn_AzureVaultRecord = await restAccess.getSecretAsync_v3("Azure-SQL-Password-20220418-B");
+
+                    string temp2b = await ssn_AzureKeyVault.VaultDataAccess.getSecret("Azure-SQL-Password-20220418-B");
+
+
+                    //string sqlServerPassword = _ssn_AzureVaultRecord.value;
+                    string sqlServerPassword = temp2b;
+
+                    string sqlConnectionString_me = String.Format(configSettings.sqlConnectionString_me_template, configSettings.serverName, configSettings.databaseName_v2, configSettings.azureSqlServerUsername, sqlServerPassword);
+
+                    SqlConnection conn2 = new SqlConnection(sqlConnectionString_me);
+
+                    return conn2;
+                });
+
+                t.Wait();
+
+                return t.Result;
+
+            }
+
+
+            // IF the process fails, the system will attempt to create database named azure. Blank out.
+
+            connectionString = "";
 
             try
             {
 
-                //// Tested OK
-                //    Task t = Task.Run(async () =>
-                //      {
-                //          string temp = await ssn_AzureKeyVault.VaultDataAccess.getSecret("ssn-key-test-20210224-001");
-
-                //          object connectionStringObj = ConfigurationManager.ConnectionStrings["Samples"];
-
-                //          if (connectionStringObj != null) connectionString = connectionStringObj.ToString();
-
-                //          if (string.IsNullOrEmpty(connectionString)) { connectionString = "Samples"; }
-
-
-                //      });
-
-                //    t.Wait();
-
-
-                Task t1 = Task.Factory.StartNew(async () =>
+                // Tested OK
+                Task t = Task.Run(async () =>
                   {
+
                       RestAccess restAccess = new RestAccess();
+                      ssn_MicrosoftToken temp1 = restAccess.getTokenAsync_v2().Result;
 
-                      ssn_MicrosoftToken temp = restAccess.getTokenAsync_v2().Result;
-                      // Todo check access_token in restAccess
-                      if (!string.IsNullOrWhiteSpace(temp.error))
-                      {
-                          APP_INSIGHTS.ai.TrackEvent("ps-253-20220414-0714-B: Failed to get access token.");
-                      }
+                      string temp2 = await ssn_AzureKeyVault.VaultDataAccess.getSecret("ssn-key-test-20210224-001");
+                      string temp2b = await ssn_AzureKeyVault.VaultDataAccess.getSecret("Azure-SQL-Password-20220418-B");
 
-                      ssn_AzureVaultRecord temp2 = await restAccess.getSecretAsync_v3("ssn-key-test-20210224-001");
+                      object connectionStringObj = ConfigurationManager.ConnectionStrings["Samples"];
 
+                      if (connectionStringObj != null) connectionString = connectionStringObj.ToString();
 
-                      /////////////////////////////////////////////////   connectionString = temp2.value;
-
+                      if (string.IsNullOrEmpty(connectionString)) { connectionString = "Samples"; }
 
 
                   });
+
+                t.Wait();
+
+
+                Task<SqlConnection> t1 = Task<SqlConnection>.Factory.StartNew(() =>
+             {
+                 RestAccess restAccess = new RestAccess();
+
+                 ssn_MicrosoftToken temp = restAccess.getTokenAsync_v2().Result;
+                 // Todo check access_token in restAccess
+                 if (!string.IsNullOrWhiteSpace(temp.error))
+                 {
+                     APP_INSIGHTS.ai.TrackEvent("ps-253-20220414-0714-B: Failed to get access token.");
+                 }
+
+                 ssn_AzureVaultRecord temp2 = restAccess.getSecretAsync_v3("ssn-key-test-20210224-001").Result;
+                 ssn_AzureVaultRecord temp2b = restAccess.getSecretAsync_v3("Azure-SQL-Password-20220418-B").Result;
+
+
+                 /////////////////////////////////////////////////   connectionString = temp2.value;
+
+
+                 // 04/18/2022 03:14 am - SSN - [20220418-0249] - [002] - Sql Azure Access Token
+                 // (Project 253 + 315 )
+                 // Failing on app.AcquireTokenInteractive(scopes).ExecuteAsync();  No error message. Referenced project in directly.  No NuGet.
+
+                 // Fails
+                 /////////////////// string SqlAzureAccessToekn = await SqlAzureAccessToken.GetAccessToken_UserInteractive();
+
+                 // Fails
+                 /////////////////// string SqlAzureAccessToekn2 = await SqlAzureAccessToken.GetAccessToken_ClientCredentials();
+
+                 // VaultDataAccess.connectToAzureSQL();
+                 ConnectToAzureSQL connectToAzureSQL = new ConnectToAzureSQL();
+
+                 Task t2 = connectToAzureSQL.connectToAzureSQLAsync();
+                 t2.Wait();
+
+
+                 connectionString = string.Format(configSettings.sqlConnectionString_template_forToken, configSettings.serverName, configSettings.databaseName_v2);
+                 string accessToken_db = connectToAzureSQL.access_token;
+
+                 SqlConnection sqlConn = new SqlConnection(connectionString);
+                 sqlConn.AccessToken = accessToken_db;
+
+                 return sqlConn;
+
+             });
 
 
                 //  .ContinueWith(a =>
@@ -94,7 +173,7 @@ namespace WPF.Sample.DataLayer
                 ;
 
                 t1.Wait();
-
+                return t1.Result;
 
             }
             catch (Exception ex)
@@ -106,7 +185,7 @@ namespace WPF.Sample.DataLayer
                 throw;
             }
 
-            return connectionString;
+
 
         }
 

@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using WPF.Sample.ViewModelLayer;
 using Common.Library;
+using ssn_application_insights;
 
 // 09/23/2020 02:29 am - SSN - [20200923-0216] - [002] - M03-06 - Create the login view model class 
 

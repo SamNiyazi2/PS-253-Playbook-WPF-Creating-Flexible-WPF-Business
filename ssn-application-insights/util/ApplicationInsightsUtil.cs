@@ -14,7 +14,15 @@ using System.Threading.Tasks;
 
 // 04/16/2022 12:04 am - SSN - Moved from WPF.Common
 // namespace WPF.Common
-namespace Common.Library
+// 04/18/2022 04:02 am  SSN - For resue
+// namespace Common.Library
+//
+//
+// install-package microsoft.ApplicationInsights -Version 2.20.0
+//
+//
+
+namespace ssn_application_insights
 {
 
     public static class APP_INSIGHTS
@@ -105,6 +113,16 @@ namespace Common.Library
             foreach (KeyValuePair<string, string> e in props ?? emptyProps)
             {
                 et.Properties.Add(e);
+            }
+            et.Properties.Add("Test-101", "Value-101");
+
+            Exception iex = ex;
+            int exceptionCount = 0; 
+            while ( iex != null)
+            {
+                exceptionCount++;
+                et.Properties.Add($"Exception-{exceptionCount:000}", ex.Message);
+                iex = ex.InnerException;
             }
 
             tc.TrackException(et);

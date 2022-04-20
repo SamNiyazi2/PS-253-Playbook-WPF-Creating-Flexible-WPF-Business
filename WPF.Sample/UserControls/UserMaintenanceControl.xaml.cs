@@ -4,7 +4,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using WPF.Sample.ViewModelLayer;
  
-using Common.Library; 
+using Common.Library;
+using ssn_application_insights;
 
 // 09/23/2020 04:23 am - SSN - [20200923-0404] - [004] - M04-04-Demo-Create-use-feedback-view-model (and UserMaintenance)
 

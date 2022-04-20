@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using WPF.Sample.ViewModelLayer;
 using Common.Library;
+using ssn_application_insights;
 
 namespace WPF.Sample.UserControls
 {

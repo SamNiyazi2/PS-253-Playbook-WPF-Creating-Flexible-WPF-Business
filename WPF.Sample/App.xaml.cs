@@ -5,7 +5,8 @@ using WPF.Sample.AppLayer;
 using Common.Library;
 using Microsoft.Extensions.DependencyInjection; 
 using WPF.Sample.Extensions;
-using System.Data.Entity; 
+using System.Data.Entity;
+using ssn_application_insights;
 
 namespace WPF.Sample
 {
@@ -25,14 +26,10 @@ namespace WPF.Sample
             // Load Application Settings
             AppSettings.Instance.LoadSettings();
 
-            APP_INSIGHTS.configure();
-
-            addDependencyInjectionItems();
 
 
-            Dictionary<string, string> dic = new Dictionary<string, string>();
 
-            APP_INSIGHTS.ai.TrackEvent("ps-253-20220415-0724: App start", dic);
+
             try
             {
                 base.OnStartup(e);
@@ -56,6 +53,14 @@ Error was logged and should be handled shortly.
         {
             try
             {
+
+                addDependencyInjectionItems();
+
+                APP_INSIGHTS.configure();
+
+
+                Dictionary<string, string> dic = new Dictionary<string, string>();
+                APP_INSIGHTS.ai.TrackEvent("ps-253-20220415-0724: App start", dic);
 
                 var mainWindow = serviceProvider.GetService<MainWindow>();
                 mainWindow.Show();
@@ -91,7 +96,7 @@ Error was logged and should be handled shortly.
             DataLayer.Helpers.External_DI_Helper.AddServices(services);
 
             EF_Ext.AddDbContext<DbContext>(services);
-            services.AddSingleton<MainWindow>();
+            services.AddTransient<MainWindow>();
 
             serviceProvider = services.BuildServiceProvider();
 
