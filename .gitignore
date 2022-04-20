@@ -4,3 +4,5 @@
 **/bin/**
 **/obj/**
 .vs
+/ssn-application-insights_dotnet_pack
+*.user
